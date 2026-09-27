@@ -6,6 +6,8 @@ updated: 2026-09-26
 product_type: web-app
 target_scale:
   users: small
+  qps: 20
+  data_volume: 500 mb
 timeline_budget:
   mvp_weeks: 3
   hard_deadline: 2026-11-01
@@ -25,7 +27,7 @@ checkpoint:
     - topic: moment
       decision: whenever there are a lot of tasks
     - topic: auth strategy
-      decision: login with email + password; flat model — each signed-in user sees only their own tasks; no extra roles
+      decision: login with email + password; accounts created in product; no email confirmation; flat model — each signed-in user sees only their own tasks; no extra roles; unauthenticated gated route shows 404
     - topic: complexity suggestion
       decision: simple guessed default from description length (1:<20, 2:<50, 3:<200, 4:<1000, 5:over 1000; first matching bucket); user can override; not a smart estimator
     - topic: mvp timeline
@@ -62,7 +64,7 @@ A plain list is not enough: when there are a lot of tasks, they also lose the or
 
 Primary persona: a busy professional. People like the author, not only the author (multi-user).
 
-They reach for this when there are a lot of tasks. Pain: forgotten todos and deadlines, and forgotten action order. Cost today: relying on memory; current workaround tool was not named.
+They reach for this when there are a lot of tasks. Pain: forgotten todos and deadlines, and forgotten action order. Cost today: relying on memory; the current workaround is pen and paper.
 
 ## Success Criteria
 
@@ -128,7 +130,7 @@ The user encounters it after a todo is added, and again after they edit deadline
 
 ## Access Control
 
-Login with email and password. Flat user model: each signed-in user sees only their own tasks. No extra roles (no admin / member / guest split).
+Login with email and password. Accounts are created in the product. Flat user model: each signed-in user sees only their own tasks. No extra roles (no admin / member / guest split). An unauthenticated user who hits a gated route sees a 404 error.
 
 ## Non-Goals
 
@@ -138,6 +140,7 @@ Login with email and password. Flat user model: each signed-in user sees only th
 - No shared lists — each signed-in user stays on their own todos only.
 - No drag-to-reorder — order comes only from sooner deadline, then lower complexity.
 - No “smart” complexity model — keep a simple 1–5 guessed default the user can override.
+- No email confirmation — out of scope.
 
 ## Open Questions
 
