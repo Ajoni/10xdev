@@ -7,8 +7,8 @@ context_type: greenfield
 product_type: web-app
 target_scale:
   users: small
-  qps: "# TODO: target_scale.qps — see Open Questions"
-  data_volume: "# TODO: target_scale.data_volume — see Open Questions"
+  qps: 20
+  data_volume: 500 mb
 timeline_budget:
   mvp_weeks: 3
   hard_deadline: 2026-11-01
@@ -25,9 +25,7 @@ A plain list is not enough: when there are a lot of tasks, they also lose the or
 
 Primary persona: a busy professional. People like the author, not only the author (multi-user).
 
-They reach for this when there are a lot of tasks. Pain: forgotten todos and deadlines, and forgotten action order. Cost today: relying on memory; current workaround tool was not named.
-
-# TODO: current workaround tool — see Open Questions
+They reach for this when there are a lot of tasks. Pain: forgotten todos and deadlines, and forgotten action order. Cost today: relying on memory; the current workaround is pen and paper.
 
 ## Success Criteria
 
@@ -93,9 +91,7 @@ The user encounters it after a todo is added, and again after they edit deadline
 
 ## Access Control
 
-Login with email and password. Flat user model: each signed-in user sees only their own tasks. No extra roles (no admin / member / guest split).
-
-# TODO: sign-up vs sign-in and unauthenticated gated routes — see Open Questions
+Login with email and password. Accounts are created in the product. Flat user model: each signed-in user sees only their own tasks. No extra roles (no admin / member / guest split). An unauthenticated user who hits a gated route sees a 404 error.
 
 ## Non-Goals
 
@@ -105,10 +101,8 @@ Login with email and password. Flat user model: each signed-in user sees only th
 - No shared lists — each signed-in user stays on their own todos only.
 - No drag-to-reorder — order comes only from sooner deadline, then lower complexity.
 - No “smart” complexity model — keep a simple 1–5 guessed default the user can override.
+- No email confirmation — out of scope.
 
 ## Open Questions
 
-1. **target_scale.qps** — TBD by user. Input recorded audience size as a handful (`users: small`) only.
-2. **target_scale.data_volume** — TBD by user. Not specified in input.
-3. **What is the current workaround tool?** — Owner: user. Persona notes: "current workaround tool was not named."
-4. **Sign-up vs sign-in, and what happens when an unauthenticated user hits a gated route?** — Owner: user. Login is email and password; those details were not specified.
+None remaining.
