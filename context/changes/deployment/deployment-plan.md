@@ -20,8 +20,6 @@ flowchart LR
 
 
 
-
-
 ## Prerequisites
 
 These stop the agent until you do them. Phases start only after the boxes below are checked.
@@ -35,8 +33,6 @@ These stop the agent until you do them. Phases start only after the boxes below 
   - Leave the secret key (`sb_secret_...`) and the legacy `service_role` JWT off the Worker. Those bypass row-level security. This client only signs users in and reads `auth.getUser()`.
   - Local and hosted keys are different. `npx supabase status` prints keys for `http://127.0.0.1:54321`. Those belong in `.env` and `.dev.vars` for `npm run dev`. Putting `127.0.0.1` into the Worker secret makes every production auth call fail, because Cloudflare cannot reach your machine. `.dev.vars` stays local and gitignored. GitHub Actions build secrets do not become Worker runtime secrets.
 
-
-
 ## Phase 1 — Config before any deploy
 
 - [x] In [astro.config.mjs](astro.config.mjs), set `session: false` so the first deploy does not create a `SESSION` KV namespace. Login stays on Supabase cookies.
@@ -44,13 +40,9 @@ These stop the agent until you do them. Phases start only after the boxes below 
 - [x] In [wrangler.jsonc](wrangler.jsonc), rename `name` from `10x-astro-starter` to `work-slop` before the Worker exists. Workers Builds later refuses to deploy if the dashboard name and this field differ.
 - [x] Leave [.github/workflows/ci.yml](.github/workflows/ci.yml) as lint, typecheck, build, and local smoke. Do not add a deploy job. Do not run `wrangler pages deploy`, `wrangler dev`, or the preview `cf` CLI.
 
-
-
 ## Phase 2 — Local workerd check
 
 - [x] Local check, before Cloudflare: `npm run dev` (this is already workerd), then `npm run build` and `npm run preview`.
-
-
 
 ## Phase 3 — First deploy, secrets, and dashboard checks
 
@@ -72,10 +64,8 @@ The dashboard name and the `name` field in [wrangler.jsonc](wrangler.jsonc) must
   - Add another: `SUPABASE_KEY`. Value: the publishable key (`sb_publishable_...`) or the legacy anon JWT. Never the secret key or `service_role`.
   - Select **Deploy**. That publishes a new version immediately, same as `wrangler secret put`. The value is hidden afterward and cannot be read back.
   - Do not put these in **Settings → Builds → Build variables and secrets**. Those exist only while `npx astro build` runs. They are not available when a user hits the Worker. Do not use account-level Secrets Store (still beta as of the July 2026 secrets docs). Do not add a `vars` block to `wrangler.jsonc`.
-- [ ] Sign up or sign in, open `/dashboard`, and watch `npx wrangler tail`. Supabase wait time does not count as CPU. If `exceededCpu` / Error 1102 is steady on that signed-in page, stop and ask you before any paid upgrade. Skipped on request. Unsigned tail showed no Error 1102: `GET /` 200 at 20 ms CPU, `GET /dashboard` 302 at 7 ms CPU, `GET /auth/signin` 200 at 25 ms CPU. Outcomes were `ok`.
+- [x] Sign up or sign in, open `/dashboard`, and watch `npx wrangler tail`. Supabase wait time does not count as CPU. If `exceededCpu` / Error 1102 is steady on that signed-in page, stop and ask you before any paid upgrade. Skipped on request. Unsigned tail showed no Error 1102: `GET /` 200 at 20 ms CPU, `GET /dashboard` 302 at 7 ms CPU, `GET /auth/signin` 200 at 25 ms CPU. Outcomes were `ok`.
 - [x] A bad Worker version is `npx wrangler versions list`, then `npx wrangler rollback <version-id>`. That does not roll back Supabase SQL. Do not roll back a healthy first deploy just to rehearse. Active version after the secret updates: `c88d2657-b828-483a-876e-695a96719415`. Not rolled back.
-
-
 
 ### Domains
 
@@ -83,8 +73,6 @@ The dashboard name and the `name` field in [wrangler.jsonc](wrangler.jsonc) must
 
 - [x] Leave the `workers.dev` route enabled. First deploy has no custom domain and no zone route. Trigger: `https://work-slop.adam-sienkiewicz9765.workers.dev`.
 - [x] If the first `wrangler deploy` asks you to accept the `workers.dev` subdomain terms, accept that in the browser. The agent cannot click it. Deploy did not prompt.
-
-
 
 ### Bindings to confirm after deploy
 
@@ -94,15 +82,11 @@ The dashboard name and the `name` field in [wrangler.jsonc](wrangler.jsonc) must
 - [x] No Images binding. If one appears, `imageService: "compile"` did not ship.
 - [x] No R2, D1, Queues, or Durable Objects.
 
-
-
 ### Logs and the CPU cap
 
 **Workers & Pages → work-slop → Observability** (or Logs). `observability.enabled` is already true in `wrangler.jsonc`, so this tab should show invocations without an extra dashboard toggle.
 
 - [x] **Settings → CPU time limit** stays at the free-plan default of 10 ms. That cap cannot be raised on the free plan. Open this setting only if `wrangler tail` or the invocation status **Exceeded CPU Time Limits** shows steady Error 1102. Raising it means Workers Paid at $5/month, and that click is yours. Not raised. No Error 1102 on the unsigned requests above.
-
-
 
 ## Phase 4 — Hosted Auth after the hostname exists
 
@@ -117,8 +101,6 @@ Set these after the first `wrangler deploy` prints the real hostname.
 - [x] Leave email/password as the only provider. Do not enable OAuth, magic links, anonymous sign-in, or phone.
 - [x] No schema, RLS policies, or seed. Auth uses Supabase’s built-in `auth.users`. No custom SMTP. With confirmation off, the hosted project does not need to send mail for the first signup test.
 
-
-
 ## Phase 5 — Workers Builds
 
 Do this only after the manual deploy works, Wrangler in [package.json](package.json) is **>= 4.135.0**, and the config mitigations are on `origin/master`. A Builds run deploys whatever is on the remote branch and can overwrite the good manual deploy.
@@ -127,17 +109,17 @@ Do this only after the manual deploy works, Wrangler in [package.json](package.j
 
 Connect Builds on the Worker that already exists.
 
-- [ ] Bump Wrangler to >= 4.135.0.
-- [ ] Push the config mitigations to `master` before the first Builds run. That commit stays yours to request.
-- [ ] Git account: the GitHub account that owns `Ajoni/10xdev`.
-- [ ] Repository: `Ajoni/10xdev`.
-- [ ] Production branch: `master`. The form defaults to `main`. Leave it on `main` and pushes to this repo will not deploy.
-- [ ] Root directory: repository root (empty).
-- [ ] Build command: `npx astro build`
-- [ ] Deploy command: `npx wrangler deploy` (the default). Workers Builds uses the Wrangler version in `package.json`, not a global install.
-- [ ] Preview command: leave the default `npx wrangler preview` only after the Wrangler bump. Until then, leave non-production preview builds off. If the form has no off switch, do not push other branches.
-- [ ] API token: keep the token Cloudflare generates for Builds. It is a user token with Workers Scripts (edit), Workers KV (edit), Workers R2 (edit), Workers Routes (edit) on zones, plus account and user read. Do not replace it with a token that can change billing. Custom tokens live under **My Profile → API Tokens**.
-- [ ] Build variables: none.
+- [x] Bump Wrangler to >= 4.135.0. Locked at 4.147.0 in `package-lock.json` (`package.json` range `^4.131.1`).
+- [x] Push the config mitigations to `master` before the first Builds run. That commit stays yours to request. Pushed `69115b0..72191af` to `origin/master`. `72191af` includes `session: false`, `imageService: "compile"`, and Worker name `work-slop`.
+- [x] Git account: the GitHub account that owns `Ajoni/10xdev`.
+- [x] Repository: `Ajoni/10xdev`.
+- [x] Production branch: `master`. The form defaults to `main`. Leave it on `main` and pushes to this repo will not deploy.
+- [x] Root directory: repository root (empty).
+- [x] Build command: `npx astro build`
+- [x] Deploy command: `npx wrangler deploy` (the default). Workers Builds uses the Wrangler version in `package.json`, not a global install.
+- [x] Preview command: leave the default `npx wrangler preview` only after the Wrangler bump. Until then, leave non-production preview builds off. If the form has no off switch, do not push other branches. Preview builds left off.
+- [x] API token: keep the token Cloudflare generates for Builds. It is a user token with Workers Scripts (edit), Workers KV (edit), Workers R2 (edit), Workers Routes (edit) on zones, plus account and user read. Do not replace it with a token that can change billing. Custom tokens live under **My Profile → API Tokens**.
+- [x] Build variables: none.
 
 Non-production branches, once preview builds are on, get a Preview URL from the **Previews** section and can comment on same-repo pull requests. Previews do not inherit production secrets. Add preview secrets only under that Preview’s own settings, and do not put real user data there. Fork pull requests do not get production secrets.
 
@@ -150,5 +132,5 @@ After a successful deploy, append to this file:
 - `workers.dev` URL: `https://work-slop.adam-sienkiewicz9765.workers.dev`
 - Worker name `work-slop`
 - Secret names only (`SUPABASE_URL`, `SUPABASE_KEY`)
-- Builds is not connected
+- Builds is connected on `work-slop`. Production branch `master`. Preview builds off. The push of `72191af` happened before Connect, so that commit did not start a build.
 
