@@ -103,9 +103,9 @@ None. Sign-in and the interface are already in place. Saving a todo, limiting it
 
 | Roadmap ID | Change ID         | Suggested issue title                                                          | Ready for `/10x-plan` | Notes                                      |
 | ---------- | ----------------- | ------------------------------------------------------------------------------ | --------------------- | ------------------------------------------ |
-| S-01       | add-ordered-todo  | Add a todo and show the private list ordered by deadline, then complexity     | yes                   | Run `/10x-plan add-ordered-todo`           |
-| S-02       | mark-todo-done    | Mark a todo done so it leaves the working list                                 | no                    | Waits on S-01                              |
-| S-03       | edit-todo-reorder | Edit a todo without dropping it, and reorder the list                          | no                    | Waits on S-01; can be planned beside S-02  |
+| S-01       | add-ordered-todo  | Add a todo and show the private list ordered by deadline, then complexity     | yes                   | Run `/10x-plan add-ordered-todo`. https://github.com/Ajoni/10xdev/issues/1 |
+| S-02       | mark-todo-done    | Mark a todo done so it leaves the working list                                 | no                    | Waits on S-01. https://github.com/Ajoni/10xdev/issues/2                    |
+| S-03       | edit-todo-reorder | Edit a todo without dropping it, and reorder the list                          | no                    | Waits on S-01; can be planned beside S-02. https://github.com/Ajoni/10xdev/issues/3 |
 
 ## Open Roadmap Questions
 
