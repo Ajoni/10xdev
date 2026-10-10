@@ -243,13 +243,13 @@ No todo rows exist yet. The migration only creates the table. A later Worker rol
 
 #### Automated
 
-- [ ] 1.1 AGENTS.md Key conventions states that browser local time is stored as UTC and that a received date is treated as UTC then shown in the local timezone
-- [ ] 1.2 The todos migration enables RLS and adds select and insert policies for the owner only
-- [ ] 1.3 `npm run lint` passes
+- [x] 1.1 AGENTS.md Key conventions states that browser local time is stored as UTC and that a received date is treated as UTC then shown in the local timezone
+- [x] 1.2 The todos migration enables RLS and adds select and insert policies for the owner only
+- [x] 1.3 `npm run lint` passes
 
 #### Manual
 
-- [ ] 1.4 The migration applies on local Supabase
+- [x] 1.4 The migration applies on local Supabase
 
 ### Phase 2: Add a todo and show the ordered list
 
