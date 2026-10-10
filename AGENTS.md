@@ -41,6 +41,7 @@ Full server-side rendering (`output: "server"` in astro.config.mjs). All pages a
 - **React**: no Next.js directives ("use client" etc.). Extract hooks to `src/components/hooks/`.
 - **Services/helpers** go in `src/lib/` (or `src/lib/services/` for extracted business logic).
 - **Shared types** (entities, DTOs) go in `src/types.ts`.
+- **Date and time**: Take the time from the browser and store it as UTC. When the browser receives a date, treat it as UTC and convert it to the local timezone for display. Apply this whenever the product deals with a date or time.
 
 ### Environment
 
