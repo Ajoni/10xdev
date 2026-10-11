@@ -270,12 +270,12 @@ No todo rows exist yet. The migration only creates the table. A later Worker rol
 
 #### Automated
 
-- [x] 3.1 `npm run smoke` passes, including unsigned /todos returning 404 and the existing dashboard redirect
-- [x] 3.2 Smoke HTML lists a sooner deadline above a later deadline
-- [x] 3.3 Smoke HTML lists lower complexity first when the deadline matches
-- [x] 3.4 Smoke HTML lists the older todo first when deadline and complexity match
-- [x] 3.5 Smoke HTML for a second signed-in user does not include the first user's todo
+- [x] 3.1 `npm run smoke` passes, including unsigned /todos returning 404 and the existing dashboard redirect — 97783a8
+- [x] 3.2 Smoke HTML lists a sooner deadline above a later deadline — 97783a8
+- [x] 3.3 Smoke HTML lists lower complexity first when the deadline matches — 97783a8
+- [x] 3.4 Smoke HTML lists the older todo first when deadline and complexity match — 97783a8
+- [x] 3.5 Smoke HTML for a second signed-in user does not include the first user's todo — 97783a8
 
 #### Manual
 
-- [x] 3.6 The clock shown on /todos matches the local time that was entered
+- [x] 3.6 The clock shown on /todos matches the local time that was entered — 97783a8
