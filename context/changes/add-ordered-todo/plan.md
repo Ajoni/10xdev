@@ -226,6 +226,12 @@ The list is one indexed select per page view. The PRD scale is a small list at a
 
 No todo rows exist yet. The migration only creates the table. A later Worker rollback does not undo the SQL.
 
+## Addendum
+
+Successful sign-in redirects to `/todos`. `scripts/smoke.mjs` expects that location for "signin accepts correct password". Unsigned `/dashboard` still redirects to `/auth/signin`. The auth routes still do not use zod.
+
+The homepage hero title is "Work slop", with copy that describes the private working list. The starter feature cards are removed. `src/pages/index.astro` sets the layout title to "Work slop".
+
 ## References
 
 - Product rule: `context/foundation/prd.md` (US-01, FR-001, FR-004, FR-007, Business Logic)
