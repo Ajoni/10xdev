@@ -15,6 +15,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
     context.locals.user = null;
   }
 
+  if (context.url.pathname.startsWith("/todos") && !context.locals.user) {
+    return new Response("Not found", { status: 404 });
+  }
+
   if (PROTECTED_ROUTES.some((route) => context.url.pathname.startsWith(route))) {
     if (!context.locals.user) {
       return context.redirect("/auth/signin");

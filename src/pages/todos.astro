@@ -1,0 +1,54 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import WorkingList from "@/components/todos/WorkingList";
+import { listTodos } from "@/lib/todos";
+import { createClient } from "@/lib/supabase";
+import type { Todo } from "@/types";
+
+const { user } = Astro.locals;
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+const formError = Astro.url.searchParams.get("error");
+
+let todos: Todo[] = [];
+let loadError: string | null = null;
+
+if (user && supabase) {
+  try {
+    todos = await listTodos(supabase, user.id);
+  } catch (error) {
+    loadError = error instanceof Error ? error.message : "Could not load todos";
+  }
+} else if (user) {
+  loadError = "Supabase is not configured";
+}
+
+const serverError = formError ?? loadError;
+---
+
+<Layout title="Todos">
+  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
+    <div class="w-full max-w-xl rounded-2xl border border-white/10 bg-white/10 p-8 text-white backdrop-blur-xl">
+      <h1 class="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-center text-2xl font-bold text-transparent">
+        Todos
+      </h1>
+
+      {loadError ? null : todos.length === 0 ? (
+        <p class="mb-6 text-sm text-blue-100/70">No todos yet.</p>
+      ) : (
+        <ol id="todo-list" class="mb-6 space-y-3">
+          {todos.map((todo) => (
+            <li class="rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+              <p class="break-words">{todo.description}</p>
+              <p class="mt-1 text-sm text-blue-100/60">Complexity {todo.complexity}</p>
+              <time class="mt-1 block text-sm text-blue-100/80" datetime={todo.deadline}>
+                {todo.deadline}
+              </time>
+            </li>
+          ))}
+        </ol>
+      )}
+
+      <WorkingList serverError={serverError} client:load />
+    </div>
+  </div>
+</Layout>
