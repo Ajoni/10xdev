@@ -243,28 +243,28 @@ No todo rows exist yet. The migration only creates the table. A later Worker rol
 
 #### Automated
 
-- [x] 1.1 AGENTS.md Key conventions states that browser local time is stored as UTC and that a received date is treated as UTC then shown in the local timezone
-- [x] 1.2 The todos migration enables RLS and adds select and insert policies for the owner only
-- [x] 1.3 `npm run lint` passes
+- [x] 1.1 AGENTS.md Key conventions states that browser local time is stored as UTC and that a received date is treated as UTC then shown in the local timezone — 19d467a
+- [x] 1.2 The todos migration enables RLS and adds select and insert policies for the owner only — 19d467a
+- [x] 1.3 `npm run lint` passes — 19d467a
 
 #### Manual
 
-- [x] 1.4 The migration applies on local Supabase
+- [x] 1.4 The migration applies on local Supabase — 19d467a
 
 ### Phase 2: Add a todo and show the ordered list
 
 #### Automated
 
-- [ ] 2.1 `npm run lint` passes
-- [ ] 2.2 `npm run build` passes
+- [x] 2.1 `npm run lint` passes
+- [x] 2.2 `npm run build` passes
 
 #### Manual
 
-- [ ] 2.3 A signed-in user can add a todo and see it on /todos
-- [ ] 2.4 The complexity guess follows trimmed length and does not change after the user edits the complexity field
-- [ ] 2.5 A deadline entered as a local clock displays as that same local clock
-- [ ] 2.6 An unsigned visit to /todos returns 404, and an unsigned visit to /dashboard still redirects to /auth/signin
-- [ ] 2.7 A description that is only spaces is rejected
+- [x] 2.3 A signed-in user can add a todo and see it on /todos
+- [x] 2.4 The complexity guess follows trimmed length and does not change after the user edits the complexity field
+- [x] 2.5 A deadline entered as a local clock displays as that same local clock
+- [x] 2.6 An unsigned visit to /todos returns 404, and an unsigned visit to /dashboard still redirects to /auth/signin
+- [x] 2.7 A description that is only spaces is rejected
 
 ### Phase 3: Smoke coverage for not-found, privacy, and order
 
