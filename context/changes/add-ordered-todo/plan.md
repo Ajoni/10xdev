@@ -255,27 +255,27 @@ No todo rows exist yet. The migration only creates the table. A later Worker rol
 
 #### Automated
 
-- [x] 2.1 `npm run lint` passes
-- [x] 2.2 `npm run build` passes
+- [x] 2.1 `npm run lint` passes — c5f259e
+- [x] 2.2 `npm run build` passes — c5f259e
 
 #### Manual
 
-- [x] 2.3 A signed-in user can add a todo and see it on /todos
-- [x] 2.4 The complexity guess follows trimmed length and does not change after the user edits the complexity field
-- [x] 2.5 A deadline entered as a local clock displays as that same local clock
-- [x] 2.6 An unsigned visit to /todos returns 404, and an unsigned visit to /dashboard still redirects to /auth/signin
-- [x] 2.7 A description that is only spaces is rejected
+- [x] 2.3 A signed-in user can add a todo and see it on /todos — c5f259e
+- [x] 2.4 The complexity guess follows trimmed length and does not change after the user edits the complexity field — c5f259e
+- [x] 2.5 A deadline entered as a local clock displays as that same local clock — c5f259e
+- [x] 2.6 An unsigned visit to /todos returns 404, and an unsigned visit to /dashboard still redirects to /auth/signin — c5f259e
+- [x] 2.7 A description that is only spaces is rejected — c5f259e
 
 ### Phase 3: Smoke coverage for not-found, privacy, and order
 
 #### Automated
 
-- [ ] 3.1 `npm run smoke` passes, including unsigned /todos returning 404 and the existing dashboard redirect
-- [ ] 3.2 Smoke HTML lists a sooner deadline above a later deadline
-- [ ] 3.3 Smoke HTML lists lower complexity first when the deadline matches
-- [ ] 3.4 Smoke HTML lists the older todo first when deadline and complexity match
-- [ ] 3.5 Smoke HTML for a second signed-in user does not include the first user's todo
+- [x] 3.1 `npm run smoke` passes, including unsigned /todos returning 404 and the existing dashboard redirect
+- [x] 3.2 Smoke HTML lists a sooner deadline above a later deadline
+- [x] 3.3 Smoke HTML lists lower complexity first when the deadline matches
+- [x] 3.4 Smoke HTML lists the older todo first when deadline and complexity match
+- [x] 3.5 Smoke HTML for a second signed-in user does not include the first user's todo
 
 #### Manual
 
-- [ ] 3.6 The clock shown on /todos matches the local time that was entered
+- [x] 3.6 The clock shown on /todos matches the local time that was entered
