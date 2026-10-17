@@ -51,6 +51,13 @@ Full server-side rendering (`output: "server"` in astro.config.mjs). All pages a
 - Cloudflare local dev: secrets go in `.dev.vars` (gitignored)
 - Deploy: `npx wrangler deploy` (requires Cloudflare account + `wrangler` auth)
 
+## UI
+
+- **Tokens**: `src/styles/global.css` is the token source.
+- **Components**: `src/components/ui/` is the component directory. Check that directory before creating a component. Add missing ones with `npx shadcn@latest add [name]`.
+- **Views**: no literal colours, palette classes, or arbitrary values in views.
+- **Kitchen sink**: `src/pages/dev/todo-states.astro`.
+
 ## CI
 
 GitHub Actions workflow (`.github/workflows/ci.yml`) runs lint + build on every push and PR to master. Requires `SUPABASE_URL` and `SUPABASE_KEY` repository secrets for the build step.

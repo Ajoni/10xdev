@@ -322,23 +322,23 @@ No data migration. Sign-in and sign-up change appearance only where they render 
 
 #### Automated
 
-- [x] 4.1 `src/pages/dev/todo-states.astro` exists and is not under the `/todos` path
-- [x] 4.2 `npm run lint` passes
-- [x] 4.3 `scripts/smoke.mjs` still expects unsigned `GET /todos` to return status 404
+- [x] 4.1 `src/pages/dev/todo-states.astro` exists and is not under the `/todos` path — 979018f
+- [x] 4.2 `npm run lint` passes — 979018f
+- [x] 4.3 `scripts/smoke.mjs` still expects unsigned `GET /todos` to return status 404 — 979018f
 
 #### Manual
 
-- [x] 4.4 The kitchen sink shows default, hover, focus-visible, error, empty, and submit loading and disabled; field disabled and list loading are marked N/A with the reasons in this phase
-- [x] 4.5 Desktop and one mobile width both show that sink
-- [x] 4.6 An unsigned visit to `/todos` shows the token-styled page and the HTTP status is 404
+- [x] 4.4 The kitchen sink shows default, hover, focus-visible, error, empty, and submit loading and disabled; field disabled and list loading are marked N/A with the reasons in this phase — 979018f
+- [x] 4.5 Desktop and one mobile width both show that sink — 979018f
+- [x] 4.6 An unsigned visit to `/todos` shows the token-styled page and the HTTP status is 404 — 979018f
 
 ### Phase 5: Guard
 
 #### Automated
 
-- [ ] 5.1 `AGENTS.md` has a UI block outside any `10x-cli` marker that names `src/styles/global.css`, `src/components/ui/`, `npx shadcn@latest add`, forbids literal colours and palette classes in views, and names `src/pages/dev/todo-states.astro`
-- [ ] 5.2 No new lint package was added to `package.json`
+- [x] 5.1 `AGENTS.md` has a UI block outside any `10x-cli` marker that names `src/styles/global.css`, `src/components/ui/`, `npx shadcn@latest add`, forbids literal colours and palette classes in views, and names `src/pages/dev/todo-states.astro`
+- [x] 5.2 No new lint package was added to `package.json`
 
 #### Manual
 
-- [ ] 5.3 `.cursor/rules/10x-course.mdc` is unchanged
+- [x] 5.3 `.cursor/rules/10x-course.mdc` is unchanged
