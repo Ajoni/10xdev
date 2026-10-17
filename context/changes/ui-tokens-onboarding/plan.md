@@ -336,9 +336,9 @@ No data migration. Sign-in and sign-up change appearance only where they render 
 
 #### Automated
 
-- [x] 5.1 `AGENTS.md` has a UI block outside any `10x-cli` marker that names `src/styles/global.css`, `src/components/ui/`, `npx shadcn@latest add`, forbids literal colours and palette classes in views, and names `src/pages/dev/todo-states.astro`
-- [x] 5.2 No new lint package was added to `package.json`
+- [x] 5.1 `AGENTS.md` has a UI block outside any `10x-cli` marker that names `src/styles/global.css`, `src/components/ui/`, `npx shadcn@latest add`, forbids literal colours and palette classes in views, and names `src/pages/dev/todo-states.astro` — 7706ef6
+- [x] 5.2 No new lint package was added to `package.json` — 7706ef6
 
 #### Manual
 
-- [x] 5.3 `.cursor/rules/10x-course.mdc` is unchanged
+- [x] 5.3 `.cursor/rules/10x-course.mdc` is unchanged — 7706ef6
