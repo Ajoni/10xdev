@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import WorkingList from "@/components/todos/WorkingList";
+import { Card } from "@/components/ui/card";
 import { listTodos } from "@/lib/todos";
 import { createClient } from "@/lib/supabase";
 import type { Todo } from "@/types";
@@ -26,21 +27,19 @@ const serverError = formError ?? loadError;
 ---
 
 <Layout title="Todos">
-  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
-    <div class="w-full max-w-xl rounded-2xl border border-white/10 bg-white/10 p-8 text-white backdrop-blur-xl">
-      <h1 class="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-center text-2xl font-bold text-transparent">
-        Todos
-      </h1>
+  <div class="bg-background flex min-h-screen items-center justify-center p-4">
+    <Card className="w-full max-w-xl gap-0 p-8">
+      <h1 class="mb-6 text-center text-2xl font-bold text-foreground">Todos</h1>
 
       {loadError ? null : todos.length === 0 ? (
-        <p class="mb-6 text-sm text-blue-100/70">No todos yet.</p>
+        <p class="mb-6 text-sm text-muted-foreground">No todos yet.</p>
       ) : (
         <ol id="todo-list" class="mb-6 space-y-3">
           {todos.map((todo) => (
-            <li class="rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+            <li class="rounded-lg border border-border px-4 py-3">
               <p class="break-words">{todo.description}</p>
-              <p class="mt-1 text-sm text-blue-100/60">Complexity {todo.complexity}</p>
-              <time class="mt-1 block text-sm text-blue-100/80" datetime={todo.deadline}>
+              <p class="mt-1 text-sm text-muted-foreground">Complexity {todo.complexity}</p>
+              <time class="mt-1 block text-sm text-muted-foreground" datetime={todo.deadline}>
                 {todo.deadline}
               </time>
             </li>
@@ -49,6 +48,6 @@ const serverError = formError ?? loadError;
       )}
 
       <WorkingList serverError={serverError} client:load />
-    </div>
+    </Card>
   </div>
 </Layout>

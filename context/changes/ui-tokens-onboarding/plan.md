@@ -298,25 +298,25 @@ No data migration. Sign-in and sign-up change appearance only where they render 
 
 #### Automated
 
-- [x] 2.1 `context/changes/ui-tokens-onboarding/token-values.md` names `src/styles/global.css` as the source and lists the existing `:root` roles this change uses
-- [x] 2.2 `src/styles/global.css` `:root` values for `--background`, `--foreground`, `--card`, `--primary`, `--destructive`, `--border`, and `--ring` are unchanged
+- [x] 2.1 `context/changes/ui-tokens-onboarding/token-values.md` names `src/styles/global.css` as the source and lists the existing `:root` roles this change uses — 49a8cc3
+- [x] 2.2 `src/styles/global.css` `:root` values for `--background`, `--foreground`, `--card`, `--primary`, `--destructive`, `--border`, and `--ring` are unchanged — 49a8cc3
 
 #### Manual
 
-- [x] 2.3 No second palette and no `shadcn init` were added
+- [x] 2.3 No second palette and no `shadcn init` were added — 49a8cc3
 
 ### Phase 3: Todos view and shared widgets
 
 #### Automated
 
-- [ ] 3.1 The hardcoded-value scan on `src/pages/todos.astro`, `src/components/todos/WorkingList.tsx`, `src/components/auth/FormField.tsx`, `src/components/auth/SubmitButton.tsx`, `src/components/auth/ServerError.tsx`, and `src/components/auth/PasswordToggle.tsx` reports no matches
-- [ ] 3.2 `npm run lint` passes
+- [x] 3.1 The hardcoded-value scan on `src/pages/todos.astro`, `src/components/todos/WorkingList.tsx`, `src/components/auth/FormField.tsx`, `src/components/auth/SubmitButton.tsx`, `src/components/auth/ServerError.tsx`, and `src/components/auth/PasswordToggle.tsx` reports no matches
+- [x] 3.2 `npm run lint` passes
 
 #### Manual
 
-- [ ] 3.3 A signed-in `/todos` page uses the light background, and the list, empty line, and form use role tokens
-- [ ] 3.4 Sign-in and sign-up still use `bg-cosmic` on the page shell, and their fields, button, and error stay readable
-- [ ] 3.5 Adding a todo still submits description, complexity, and deadline, and a blank description or deadline shows an error
+- [x] 3.3 A signed-in `/todos` page uses the light background, and the list, empty line, and form use role tokens
+- [x] 3.4 Sign-in and sign-up still use `bg-cosmic` on the page shell, and their fields, button, and error stay readable
+- [x] 3.5 Adding a todo still submits description, complexity, and deadline, and a blank description or deadline shows an error
 
 ### Phase 4: States and unsigned entry
 

@@ -3,6 +3,9 @@ import { Calendar, CircleAlert, ClipboardList, Plus } from "lucide-react";
 import { FormField } from "@/components/auth/FormField";
 import { ServerError } from "@/components/auth/ServerError";
 import { SubmitButton } from "@/components/auth/SubmitButton";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { guessComplexity } from "@/lib/todos";
 import { cn } from "@/lib/utils";
 import type { Todo } from "@/types";
@@ -107,35 +110,32 @@ export default function WorkingList({ serverError }: Props) {
       />
 
       <div>
-        <label htmlFor="complexity" className="mb-1 block text-sm text-blue-100/80">
+        <Label htmlFor="complexity" className="mb-1">
           Complexity
-        </label>
-        <select
-          id="complexity"
-          name="complexity"
-          value={complexity}
-          onChange={(event) => {
-            handleComplexityChange(event.target.value);
-          }}
-          className="w-full rounded-lg border border-white/20 bg-slate-900 px-3 py-2 text-white focus:ring-2 focus:ring-purple-400 focus:outline-none"
-        >
-          {COMPLEXITY_LEVELS.map((level) => (
-            <option key={level} value={level}>
-              {level}
-            </option>
-          ))}
-        </select>
+        </Label>
+        <Select name="complexity" value={String(complexity)} onValueChange={handleComplexityChange}>
+          <SelectTrigger id="complexity" className="border-border bg-background text-foreground w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {COMPLEXITY_LEVELS.map((level) => (
+              <SelectItem key={level} value={String(level)}>
+                {level}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div>
-        <label htmlFor="deadline-local" className="mb-1 block text-sm text-blue-100/80">
+        <Label htmlFor="deadline-local" className="mb-1">
           Deadline
-        </label>
+        </Label>
         <div className="relative">
-          <span className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-white/40">
+          <span className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2">
             <Calendar className="size-4" />
           </span>
-          <input
+          <Input
             id="deadline-local"
             type="datetime-local"
             value={deadlineLocal}
@@ -145,14 +145,12 @@ export default function WorkingList({ serverError }: Props) {
                 setErrors((prev) => ({ ...prev, deadline: undefined }));
               }
             }}
-            className={cn(
-              "w-full rounded-lg border bg-slate-900 py-2 pr-3 pl-10 text-white [color-scheme:dark] focus:ring-2 focus:outline-none",
-              errors.deadline ? "border-red-400/60 focus:ring-red-400" : "border-white/20 focus:ring-purple-400",
-            )}
+            aria-invalid={errors.deadline ? true : undefined}
+            className={cn("border-border bg-background text-foreground pl-10", errors.deadline && "border-destructive")}
           />
         </div>
         {errors.deadline ? (
-          <p className="mt-1 flex items-center gap-1 text-xs text-red-300">
+          <p className="text-destructive mt-1 flex items-center gap-1 text-xs">
             <CircleAlert className="size-3" />
             {errors.deadline}
           </p>
