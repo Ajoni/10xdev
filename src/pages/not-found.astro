@@ -1,0 +1,17 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Card } from "@/components/ui/card";
+---
+
+<Layout title="Not found">
+  <div class="bg-background flex min-h-screen items-center justify-center p-4">
+    <Card className="w-full max-w-xl gap-0 p-8">
+      <h1 class="mb-6 text-center text-2xl font-bold text-foreground">Not found</h1>
+      <p class="text-center text-sm">
+        <a href="/auth/signin" class="text-foreground underline">
+          Sign in
+        </a>
+      </p>
+    </Card>
+  </div>
+</Layout>

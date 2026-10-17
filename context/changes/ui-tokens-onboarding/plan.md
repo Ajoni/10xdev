@@ -309,28 +309,28 @@ No data migration. Sign-in and sign-up change appearance only where they render 
 
 #### Automated
 
-- [x] 3.1 The hardcoded-value scan on `src/pages/todos.astro`, `src/components/todos/WorkingList.tsx`, `src/components/auth/FormField.tsx`, `src/components/auth/SubmitButton.tsx`, `src/components/auth/ServerError.tsx`, and `src/components/auth/PasswordToggle.tsx` reports no matches
-- [x] 3.2 `npm run lint` passes
+- [x] 3.1 The hardcoded-value scan on `src/pages/todos.astro`, `src/components/todos/WorkingList.tsx`, `src/components/auth/FormField.tsx`, `src/components/auth/SubmitButton.tsx`, `src/components/auth/ServerError.tsx`, and `src/components/auth/PasswordToggle.tsx` reports no matches — cae2c75
+- [x] 3.2 `npm run lint` passes — cae2c75
 
 #### Manual
 
-- [x] 3.3 A signed-in `/todos` page uses the light background, and the list, empty line, and form use role tokens
-- [x] 3.4 Sign-in and sign-up still use `bg-cosmic` on the page shell, and their fields, button, and error stay readable
-- [x] 3.5 Adding a todo still submits description, complexity, and deadline, and a blank description or deadline shows an error
+- [x] 3.3 A signed-in `/todos` page uses the light background, and the list, empty line, and form use role tokens — cae2c75
+- [x] 3.4 Sign-in and sign-up still use `bg-cosmic` on the page shell, and their fields, button, and error stay readable — cae2c75
+- [x] 3.5 Adding a todo still submits description, complexity, and deadline, and a blank description or deadline shows an error — cae2c75
 
 ### Phase 4: States and unsigned entry
 
 #### Automated
 
-- [ ] 4.1 `src/pages/dev/todo-states.astro` exists and is not under the `/todos` path
-- [ ] 4.2 `npm run lint` passes
-- [ ] 4.3 `scripts/smoke.mjs` still expects unsigned `GET /todos` to return status 404
+- [x] 4.1 `src/pages/dev/todo-states.astro` exists and is not under the `/todos` path
+- [x] 4.2 `npm run lint` passes
+- [x] 4.3 `scripts/smoke.mjs` still expects unsigned `GET /todos` to return status 404
 
 #### Manual
 
-- [ ] 4.4 The kitchen sink shows default, hover, focus-visible, error, empty, and submit loading and disabled; field disabled and list loading are marked N/A with the reasons in this phase
-- [ ] 4.5 Desktop and one mobile width both show that sink
-- [ ] 4.6 An unsigned visit to `/todos` shows the token-styled page and the HTTP status is 404
+- [x] 4.4 The kitchen sink shows default, hover, focus-visible, error, empty, and submit loading and disabled; field disabled and list loading are marked N/A with the reasons in this phase
+- [x] 4.5 Desktop and one mobile width both show that sink
+- [x] 4.6 An unsigned visit to `/todos` shows the token-styled page and the HTTP status is 404
 
 ### Phase 5: Guard
 
