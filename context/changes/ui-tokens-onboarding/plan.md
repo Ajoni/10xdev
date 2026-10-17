@@ -287,23 +287,23 @@ No data migration. Sign-in and sign-up change appearance only where they render 
 
 #### Automated
 
-- [x] 1.1 `src/components/ui/input.tsx`, `label.tsx`, `select.tsx`, and `card.tsx` exist
-- [x] 1.2 `npm run lint` passes
+- [x] 1.1 `src/components/ui/input.tsx`, `label.tsx`, `select.tsx`, and `card.tsx` exist — 970f939
+- [x] 1.2 `npm run lint` passes — 970f939
 
 #### Manual
 
-- [x] 1.3 `src/components/ui/button.tsx` is still the only button component
+- [x] 1.3 `src/components/ui/button.tsx` is still the only button component — 970f939
 
 ### Phase 2: Token values
 
 #### Automated
 
-- [ ] 2.1 `context/changes/ui-tokens-onboarding/token-values.md` names `src/styles/global.css` as the source and lists the existing `:root` roles this change uses
-- [ ] 2.2 `src/styles/global.css` `:root` values for `--background`, `--foreground`, `--card`, `--primary`, `--destructive`, `--border`, and `--ring` are unchanged
+- [x] 2.1 `context/changes/ui-tokens-onboarding/token-values.md` names `src/styles/global.css` as the source and lists the existing `:root` roles this change uses
+- [x] 2.2 `src/styles/global.css` `:root` values for `--background`, `--foreground`, `--card`, `--primary`, `--destructive`, `--border`, and `--ring` are unchanged
 
 #### Manual
 
-- [ ] 2.3 No second palette and no `shadcn init` were added
+- [x] 2.3 No second palette and no `shadcn init` were added
 
 ### Phase 3: Todos view and shared widgets
 
