@@ -227,22 +227,22 @@ No database migration. Moving the helpers does not change values already stored 
 
 #### Automated
 
-- [x] 1.1 `npm test` passes, including trimmed lengths 0 and 19 → 1, 20 and 49 → 2, 50 and 199 → 3, 200 and 999 → 4, 1000 → 5, and a 19-character description wrapped in spaces → 1
-- [x] 1.2 `npm run lint` passes
-- [x] 1.3 `npx astro check` passes
-- [x] 1.4 Job `ci` runs `npm test` with no Supabase env
+- [x] 1.1 `npm test` passes, including trimmed lengths 0 and 19 → 1, 20 and 49 → 2, 50 and 199 → 3, 200 and 999 → 4, 1000 → 5, and a 19-character description wrapped in spaces → 1 — ea764b3
+- [x] 1.2 `npm run lint` passes — ea764b3
+- [x] 1.3 `npx astro check` passes — ea764b3
+- [x] 1.4 Job `ci` runs `npm test` with no Supabase env — ea764b3
 
 ### Phase 2: Pinned-timezone deadlines
 
 #### Automated
 
-- [ ] 2.1 `npm test` passes the America/Los_Angeles cases: `2026-10-14T23:30` stores `2026-10-15T06:30:00.000Z` and displays `2026-10-14 23:30`; `2026-10-15T00:30` stores `2026-10-15T07:30:00.000Z` and displays `2026-10-15 00:30`; invalid input returns `""` from `toUtcInstant` and the original string from `formatLocalClock`
-- [ ] 2.2 `npm run lint` passes
-- [ ] 2.3 `npx astro check` passes
+- [x] 2.1 `npm test` passes the America/Los_Angeles cases: `2026-10-14T23:30` stores `2026-10-15T06:30:00.000Z` and displays `2026-10-14 23:30`; `2026-10-15T00:30` stores `2026-10-15T07:30:00.000Z` and displays `2026-10-15 00:30`; invalid input returns `""` from `toUtcInstant` and the original string from `formatLocalClock`
+- [x] 2.2 `npm run lint` passes
+- [x] 2.3 `npx astro check` passes
 
 #### Manual
 
-- [ ] 2.4 Adding a todo on `/todos` still shows a local clock, and the new row takes its place by the entered deadline
+- [x] 2.4 Adding a todo on `/todos` still shows a local clock, and the new row takes its place by the entered deadline
 
 ### Phase 3: Unsigned list body
 

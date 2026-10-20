@@ -6,6 +6,7 @@ import { SubmitButton } from "@/components/auth/SubmitButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { formatLocalClock, toUtcInstant } from "@/lib/deadlines";
 import { guessComplexity } from "@/lib/todos";
 import { cn } from "@/lib/utils";
 import type { Todo } from "@/types";
@@ -16,30 +17,8 @@ interface Props {
 
 const COMPLEXITY_LEVELS = [1, 2, 3, 4, 5] as const;
 
-function formatLocalClock(instant: string): string {
-  const date = new Date(instant);
-  if (Number.isNaN(date.getTime())) {
-    return instant;
-  }
-  const pad = (value: number) => String(value).padStart(2, "0");
-  const year = String(date.getFullYear());
-  const month = pad(date.getMonth() + 1);
-  const day = pad(date.getDate());
-  const hour = pad(date.getHours());
-  const minute = pad(date.getMinutes());
-  return `${year}-${month}-${day} ${hour}:${minute}`;
-}
-
 function isComplexity(value: number): value is Todo["complexity"] {
   return value === 1 || value === 2 || value === 3 || value === 4 || value === 5;
-}
-
-function toUtcInstant(localValue: string): string {
-  const parsed = new Date(localValue);
-  if (Number.isNaN(parsed.getTime())) {
-    return "";
-  }
-  return parsed.toISOString();
 }
 
 export default function WorkingList({ serverError }: Props) {
