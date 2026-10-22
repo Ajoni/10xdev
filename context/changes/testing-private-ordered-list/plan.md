@@ -236,17 +236,17 @@ No database migration. Moving the helpers does not change values already stored 
 
 #### Automated
 
-- [x] 2.1 `npm test` passes the America/Los_Angeles cases: `2026-10-14T23:30` stores `2026-10-15T06:30:00.000Z` and displays `2026-10-14 23:30`; `2026-10-15T00:30` stores `2026-10-15T07:30:00.000Z` and displays `2026-10-15 00:30`; invalid input returns `""` from `toUtcInstant` and the original string from `formatLocalClock`
-- [x] 2.2 `npm run lint` passes
-- [x] 2.3 `npx astro check` passes
+- [x] 2.1 `npm test` passes the America/Los_Angeles cases: `2026-10-14T23:30` stores `2026-10-15T06:30:00.000Z` and displays `2026-10-14 23:30`; `2026-10-15T00:30` stores `2026-10-15T07:30:00.000Z` and displays `2026-10-15 00:30`; invalid input returns `""` from `toUtcInstant` and the original string from `formatLocalClock` — b4bcb04
+- [x] 2.2 `npm run lint` passes — b4bcb04
+- [x] 2.3 `npx astro check` passes — b4bcb04
 
 #### Manual
 
-- [x] 2.4 Adding a todo on `/todos` still shows a local clock, and the new row takes its place by the entered deadline
+- [x] 2.4 Adding a todo on `/todos` still shows a local clock, and the new row takes its place by the entered deadline — b4bcb04
 
 ### Phase 3: Unsigned list body
 
 #### Automated
 
-- [ ] 3.1 `npm run lint` passes
-- [ ] 3.2 With the preview server running, `npm run smoke` passes, and `unsigned todos is not found` requires status 404, the text `Not found`, and excludes `Add todo` and `id="todo-list"`
+- [x] 3.1 `npm run lint` passes
+- [x] 3.2 With the preview server running, `npm run smoke` passes, and `unsigned todos is not found` requires status 404, the text `Not found`, and excludes `Add todo` and `id="todo-list"`

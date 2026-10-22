@@ -72,7 +72,11 @@ function bodyOk(body, expected) {
 const steps = [
   ["home renders", () => request("/"), { status: 200 }],
   ["dashboard redirects anonymous user", () => request("/dashboard"), { status: 302, location: "/auth/signin" }],
-  ["unsigned todos is not found", () => request("/todos"), { status: 404 }],
+  [
+    "unsigned todos is not found",
+    () => request("/todos"),
+    { status: 404, includes: ["Not found"], excludes: ["Add todo", 'id="todo-list"'] },
+  ],
   [
     "signup creates account",
     () => request("/api/auth/signup", { method: "POST", form: { email, password } }),
