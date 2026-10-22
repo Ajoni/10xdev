@@ -248,5 +248,5 @@ No database migration. Moving the helpers does not change values already stored 
 
 #### Automated
 
-- [x] 3.1 `npm run lint` passes
-- [x] 3.2 With the preview server running, `npm run smoke` passes, and `unsigned todos is not found` requires status 404, the text `Not found`, and excludes `Add todo` and `id="todo-list"`
+- [x] 3.1 `npm run lint` passes — bbab2bf
+- [x] 3.2 With the preview server running, `npm run smoke` passes, and `unsigned todos is not found` requires status 404, the text `Not found`, and excludes `Add todo` and `id="todo-list"` — bbab2bf
