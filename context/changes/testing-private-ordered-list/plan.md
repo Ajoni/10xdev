@@ -71,13 +71,14 @@ Add Vitest, run it in job `ci`, and lock `guessComplexity` at each shipped lengt
 
 **Intent**: Give the repo a unit command and run it in the existing lint-and-build job, which does not need a database.
 
-**Contract**: `package.json` gains a devDependency on Vitest and a `test` script whose command is `vitest run`. `vitest.config.ts` uses `getViteConfig` from `astro/config`. Job `ci` runs `npm test` after `npx astro check` and before `npm run build`. That step has no `SUPABASE_URL` or `SUPABASE_KEY` env. Job `smoke` stays as it is.
+**Contract**: `package.json` gains a devDependency on Vitest and a `test` script whose command is `vitest run`. `vitest.config.ts` uses `getViteConfig` from `astro/config`, with `test.environment` `node` and `test.env.TZ` `America/Los_Angeles`. It then drops plugins whose names start with `vite-plugin-cloudflare`, and sets `test.include` to `src/**/*.{test,spec}.ts`. Job `ci` runs `npm test` after `npx astro check` and before `npm run build`. That step has no `SUPABASE_URL` or `SUPABASE_KEY` env. Job `smoke` stays as it is.
 
 ```ts
 export default getViteConfig({
   test: {
     environment: "node",
     env: { TZ: "America/Los_Angeles" },
+    include: ["src/**/*.{test,spec}.ts"],
   },
 });
 ```

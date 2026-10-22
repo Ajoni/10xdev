@@ -1,7 +1,7 @@
 ---
 change_id: testing-private-ordered-list
 title: Test privacy, order, and UTC deadlines on the working list
-status: implemented
+status: impl_reviewed
 created: 2026-10-18
 updated: 2026-10-22
 archived_at: null
