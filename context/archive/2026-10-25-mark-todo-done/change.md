@@ -1,10 +1,10 @@
 ---
 change_id: mark-todo-done
 title: Mark todo done
-status: impl_reviewed
+status: archived
 created: 2026-10-25
 updated: 2026-10-25
-archived_at: null
+archived_at: 2026-10-25T12:45:33Z
 ---
 
 ## Notes
