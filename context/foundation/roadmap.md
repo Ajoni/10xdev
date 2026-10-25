@@ -42,7 +42,7 @@ Busy professionals forget todos and deadlines when those live in their heads, an
 | ID   | Change ID           | Outcome (user can …)                                                                                      | Prerequisites | PRD refs                       | Status   |
 | ---- | ------------------- | --------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------ | -------- |
 | S-01 | add-ordered-todo    | add a todo and see only their own working list, ordered by sooner deadline, then lower complexity        | —             | US-01, FR-001, FR-004, FR-007  | done |
-| S-02 | mark-todo-done      | mark a todo done and have it leave the working list, with no history view                                 | S-01          | US-01, FR-003, FR-005          | proposed |
+| S-02 | mark-todo-done      | mark a todo done and have it leave the working list, with no history view                                 | S-01          | US-01, FR-003, FR-005          | in-progress |
 | S-03 | edit-todo-reorder   | edit a todo and keep it on the working list, reordered when the deadline or complexity changes            | S-01          | FR-002                         | proposed |
 
 ## Baseline
@@ -85,7 +85,7 @@ None. Sign-in and the interface are already in place. Saving a todo, limiting it
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Sequenced after add, because leaving the list only means something once a todo is on it; history stays out so this does not become a second view.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-03: Edit a todo without dropping it
 

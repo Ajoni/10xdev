@@ -39,6 +39,7 @@ export async function listTodos(supabase: SupabaseClient, userId: string): Promi
     .from("todos")
     .select("id, user_id, description, complexity, deadline, created_at")
     .eq("user_id", userId)
+    .is("completed_at", null)
     .order("deadline", { ascending: true })
     .order("complexity", { ascending: true })
     .order("created_at", { ascending: true });
