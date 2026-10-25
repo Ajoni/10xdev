@@ -14,6 +14,8 @@ const laterDeadline = "2026-10-20T12:00:00.000Z";
 const soonerShown = "2026-10-15T15:00:00+00:00";
 const laterShown = "2026-10-20T12:00:00+00:00";
 const descriptions = ["smoke-sooner-c1-older", "smoke-sooner-c1-newer", "smoke-sooner-c3", "smoke-later-c1"];
+const remainingOrder = [descriptions[1], soonerShown, descriptions[2], soonerShown, descriptions[3], laterShown];
+let doneAction = "";
 
 function cookieHeader(cookieJar) {
   return [...cookieJar.entries()].map(([k, v]) => `${k}=${v}`).join("; ");
@@ -68,6 +70,18 @@ function bodyOk(body, expected) {
   if (expected.excludes && !expected.excludes.every((part) => !body.includes(part))) return false;
   return true;
 }
+
+function formActionInItem(html, description) {
+  const items = html.match(/<li\b[^>]*>[\s\S]*?<\/li>/g) ?? [];
+  for (const item of items) {
+    if (!item.includes(description)) continue;
+    const action = item.match(/<form\b[^>]*\baction="([^"]*)"/);
+    return action ? action[1] : "";
+  }
+  return "";
+}
+
+const doneActionPattern = /^\/api\/todos\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/done$/i;
 
 const steps = [
   ["home renders", () => request("/"), { status: 200 }],
@@ -129,6 +143,23 @@ const steps = [
       ],
     },
   ],
+  ["older sooner todo done action", () => request("/todos"), { status: 200, doneActionFor: descriptions[0] }],
+  [
+    "mark older sooner todo done",
+    () => request(doneAction, { method: "POST" }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  [
+    "marked todo leaves the list in order",
+    () => request("/todos"),
+    { status: 200, excludes: [descriptions[0]], ordered: remainingOrder },
+  ],
+  [
+    "marking the same todo again",
+    () => request(doneAction, { method: "POST" }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  ["second mark keeps the todo off the list", () => request("/todos"), { status: 200, excludes: [descriptions[0]] }],
   [
     "second user signs up",
     () =>
@@ -150,6 +181,16 @@ const steps = [
     { status: 302, location: "/todos" },
   ],
   [
+    "second user posts the same done action",
+    () => request(doneAction, { method: "POST", cookieJar: otherJar }),
+    { status: 302, location: "/todos" },
+  ],
+  [
+    "first user still lists the remaining todos",
+    () => request("/todos"),
+    { status: 200, excludes: [descriptions[0]], ordered: remainingOrder },
+  ],
+  [
     "second user does not see the first user's todos",
     () => request("/todos", { cookieJar: otherJar }),
     { status: 200, excludes: descriptions },
@@ -162,16 +203,21 @@ const steps = [
 let failed = 0;
 for (const [name, run, expected] of steps) {
   const actual = await run();
+  if (expected.doneActionFor !== undefined) {
+    doneAction = formActionInItem(actual.body, expected.doneActionFor);
+  }
   const locationOk =
     expected.location === undefined ||
     (expected.exact ? actual.location === expected.location : actual.location.startsWith(expected.location));
   const bodyMatches = bodyOk(actual.body, expected);
-  const ok = actual.status === expected.status && locationOk && bodyMatches;
+  const actionOk = expected.doneActionFor === undefined || doneActionPattern.test(doneAction);
+  const ok = actual.status === expected.status && locationOk && bodyMatches && actionOk;
   console.log(`${ok ? "PASS" : "FAIL"}  ${name}  -> ${actual.status} ${actual.location}`);
   if (!ok) {
     failed++;
     console.log(`      expected ${expected.status} ${expected.location ?? ""}`);
     if (!bodyMatches) console.log("      body check failed");
+    if (!actionOk) console.log(`      expected /api/todos/<id>/done, found ${doneAction || "(none)"}`);
   }
 }
 

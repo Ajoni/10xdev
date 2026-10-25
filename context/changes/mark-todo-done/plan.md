@@ -251,27 +251,27 @@ Existing rows gain `completed_at` null, so they remain on the working list. A Wo
 
 #### Automated
 
-- [x] 2.1 `npm run lint` passes
-- [x] 2.2 `npm run build` passes
-- [x] 2.3 `npm test` passes
+- [x] 2.1 `npm run lint` passes — 9a4851d
+- [x] 2.2 `npm run build` passes — 9a4851d
+- [x] 2.3 `npm test` passes — 9a4851d
 
 #### Manual
 
-- [x] 2.4 One click on Done removes that todo with no confirmation
-- [x] 2.5 Two todos that share a deadline and complexity: marking the upper one done leaves the lower one in place
-- [x] 2.6 Adding those same words again creates a new todo that sorts below the one that stayed
-- [x] 2.7 Marking the last visible todo shows "No todos yet."
-- [x] 2.8 The dev specimen's default row shows a Done control
+- [x] 2.4 One click on Done removes that todo with no confirmation — 9a4851d
+- [x] 2.5 Two todos that share a deadline and complexity: marking the upper one done leaves the lower one in place — 9a4851d
+- [x] 2.6 Adding those same words again creates a new todo that sorts below the one that stayed — 9a4851d
+- [x] 2.7 Marking the last visible todo shows "No todos yet." — 9a4851d
+- [x] 2.8 The dev specimen's default row shows a Done control — 9a4851d
 
 ### Phase 3: Smoke check
 
 #### Automated
 
-- [ ] 3.1 `npm run smoke` passes, including the existing unsigned `/todos` 404, order fixture, and second-user privacy checks
-- [ ] 3.2 After marking `smoke-sooner-c1-older` done, smoke HTML excludes that description and lists `smoke-sooner-c1-newer`, then `smoke-sooner-c3`, then `smoke-later-c1`
-- [ ] 3.3 A second POST to that same done action redirects to `/todos` with no `error` query, and the description stays absent
-- [ ] 3.4 A second signed-in user posting that same action does not put `smoke-sooner-c1-older` back and still does not see the first user's descriptions
+- [x] 3.1 `npm run smoke` passes, including the existing unsigned `/todos` 404, order fixture, and second-user privacy checks
+- [x] 3.2 After marking `smoke-sooner-c1-older` done, smoke HTML excludes that description and lists `smoke-sooner-c1-newer`, then `smoke-sooner-c3`, then `smoke-later-c1`
+- [x] 3.3 A second POST to that same done action redirects to `/todos` with no `error` query, and the description stays absent
+- [x] 3.4 A second signed-in user posting that same action does not put `smoke-sooner-c1-older` back and still does not see the first user's descriptions
 
 #### Manual
 
-- [ ] 3.5 The clock shown on a remaining todo still matches the local time that was entered
+- [x] 3.5 The clock shown on a remaining todo still matches the local time that was entered
