@@ -3,7 +3,7 @@ project: "Work slop"
 version: 1
 status: draft
 created: 2026-10-07
-updated: 2026-10-10
+updated: 2026-10-25
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -41,7 +41,7 @@ Busy professionals forget todos and deadlines when those live in their heads, an
 
 | ID   | Change ID           | Outcome (user can …)                                                                                      | Prerequisites | PRD refs                       | Status   |
 | ---- | ------------------- | --------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------ | -------- |
-| S-01 | add-ordered-todo    | add a todo and see only their own working list, ordered by sooner deadline, then lower complexity        | —             | US-01, FR-001, FR-004, FR-007  | in-progress |
+| S-01 | add-ordered-todo    | add a todo and see only their own working list, ordered by sooner deadline, then lower complexity        | —             | US-01, FR-001, FR-004, FR-007  | done |
 | S-02 | mark-todo-done      | mark a todo done and have it leave the working list, with no history view                                 | S-01          | US-01, FR-003, FR-005          | proposed |
 | S-03 | edit-todo-reorder   | edit a todo and keep it on the working list, reordered when the deadline or complexity changes            | S-01          | FR-002                         | proposed |
 
@@ -73,7 +73,7 @@ None. Sign-in and the interface are already in place. Saving a todo, limiting it
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Add, private visibility, and ordering land together; splitting them would ship a list that does not prove the product works.
-- **Status:** in-progress
+- **Status:** done
 
 ### S-02: Mark a todo done
 
@@ -127,4 +127,4 @@ None. The PRD lists no open questions, and sequencing did not surface a new cros
 
 ## Done
 
-(Empty. Entries are added when a matching change is archived.)
+- **S-01: user can add a todo with what needs to be done, a guessed complexity default they can override, and a deadline, and see only their own working list ordered by sooner deadline, then lower complexity; a person who is not signed in and opens that list gets a not-found response.** — Archived 2026-10-25 → `context/archive/2026-10-10-add-ordered-todo/`. Lesson: —.
