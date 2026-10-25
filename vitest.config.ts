@@ -31,7 +31,7 @@ const resolveConfig: UserConfigFn = getViteConfig({
   test: {
     environment: "node",
     env: { TZ: "America/Los_Angeles" },
-    include: ["src/**/*.{test,spec}.ts"],
+    include: ["src/**/*.{test,spec}.ts", "scripts/**/*.test.mjs"],
   },
 });
 
