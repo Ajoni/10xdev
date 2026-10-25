@@ -1,7 +1,7 @@
 ---
 change_id: mark-todo-done
 title: Mark todo done
-status: implementing
+status: implemented
 created: 2026-10-25
 updated: 2026-10-25
 archived_at: null

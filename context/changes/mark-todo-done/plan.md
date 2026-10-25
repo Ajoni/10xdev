@@ -267,11 +267,11 @@ Existing rows gain `completed_at` null, so they remain on the working list. A Wo
 
 #### Automated
 
-- [x] 3.1 `npm run smoke` passes, including the existing unsigned `/todos` 404, order fixture, and second-user privacy checks
-- [x] 3.2 After marking `smoke-sooner-c1-older` done, smoke HTML excludes that description and lists `smoke-sooner-c1-newer`, then `smoke-sooner-c3`, then `smoke-later-c1`
-- [x] 3.3 A second POST to that same done action redirects to `/todos` with no `error` query, and the description stays absent
-- [x] 3.4 A second signed-in user posting that same action does not put `smoke-sooner-c1-older` back and still does not see the first user's descriptions
+- [x] 3.1 `npm run smoke` passes, including the existing unsigned `/todos` 404, order fixture, and second-user privacy checks — 10e482b
+- [x] 3.2 After marking `smoke-sooner-c1-older` done, smoke HTML excludes that description and lists `smoke-sooner-c1-newer`, then `smoke-sooner-c3`, then `smoke-later-c1` — 10e482b
+- [x] 3.3 A second POST to that same done action redirects to `/todos` with no `error` query, and the description stays absent — 10e482b
+- [x] 3.4 A second signed-in user posting that same action does not put `smoke-sooner-c1-older` back and still does not see the first user's descriptions — 10e482b
 
 #### Manual
 
-- [x] 3.5 The clock shown on a remaining todo still matches the local time that was entered
+- [x] 3.5 The clock shown on a remaining todo still matches the local time that was entered — 10e482b
