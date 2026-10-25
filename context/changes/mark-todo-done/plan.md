@@ -238,30 +238,30 @@ Existing rows gain `completed_at` null, so they remain on the working list. A Wo
 
 #### Automated
 
-- [x] 1.1 The new migration adds nullable `completed_at timestamptz`, revokes table-level update from `anon` and `authenticated`, grants `authenticated` update on `completed_at` only, and adds an update policy whose `using` requires `user_id = auth.uid()` and `completed_at is null`, and whose `with check` requires `user_id = auth.uid()` and `completed_at is not null`
-- [x] 1.2 `listTodos` returns only rows with `completed_at` null and keeps the order deadline, complexity, `created_at` ascending
-- [x] 1.3 `npm run lint` passes
-- [x] 1.4 `npm test` passes
+- [x] 1.1 The new migration adds nullable `completed_at timestamptz`, revokes table-level update from `anon` and `authenticated`, grants `authenticated` update on `completed_at` only, and adds an update policy whose `using` requires `user_id = auth.uid()` and `completed_at is null`, and whose `with check` requires `user_id = auth.uid()` and `completed_at is not null` — cdf54c5
+- [x] 1.2 `listTodos` returns only rows with `completed_at` null and keeps the order deadline, complexity, `created_at` ascending — cdf54c5
+- [x] 1.3 `npm run lint` passes — cdf54c5
+- [x] 1.4 `npm test` passes — cdf54c5
 
 #### Manual
 
-- [x] 1.5 The migration applies on local Supabase and existing todos still appear on `/todos`
+- [x] 1.5 The migration applies on local Supabase and existing todos still appear on `/todos` — cdf54c5
 
 ### Phase 2: Done control
 
 #### Automated
 
-- [ ] 2.1 `npm run lint` passes
-- [ ] 2.2 `npm run build` passes
-- [ ] 2.3 `npm test` passes
+- [x] 2.1 `npm run lint` passes
+- [x] 2.2 `npm run build` passes
+- [x] 2.3 `npm test` passes
 
 #### Manual
 
-- [ ] 2.4 One click on Done removes that todo with no confirmation
-- [ ] 2.5 Two todos that share a deadline and complexity: marking the upper one done leaves the lower one in place
-- [ ] 2.6 Adding those same words again creates a new todo that sorts below the one that stayed
-- [ ] 2.7 Marking the last visible todo shows "No todos yet."
-- [ ] 2.8 The dev specimen's default row shows a Done control
+- [x] 2.4 One click on Done removes that todo with no confirmation
+- [x] 2.5 Two todos that share a deadline and complexity: marking the upper one done leaves the lower one in place
+- [x] 2.6 Adding those same words again creates a new todo that sorts below the one that stayed
+- [x] 2.7 Marking the last visible todo shows "No todos yet."
+- [x] 2.8 The dev specimen's default row shows a Done control
 
 ### Phase 3: Smoke check
 

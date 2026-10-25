@@ -83,3 +83,24 @@ export async function insertTodo(
 
   return error?.message ?? null;
 }
+
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function isUuid(value: string): boolean {
+  return UUID_PATTERN.test(value);
+}
+
+export async function markTodoDone(supabase: SupabaseClient, userId: string, todoId: string): Promise<string | null> {
+  if (!isUuid(todoId)) {
+    return null;
+  }
+
+  const { error } = await supabase
+    .from("todos")
+    .update({ completed_at: new Date().toISOString() })
+    .eq("id", todoId)
+    .eq("user_id", userId)
+    .is("completed_at", null);
+
+  return error?.message ?? null;
+}

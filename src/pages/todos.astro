@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import WorkingList from "@/components/todos/WorkingList";
+import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { listTodos } from "@/lib/todos";
 import { createClient } from "@/lib/supabase";
@@ -42,6 +43,11 @@ const serverError = formError ?? loadError;
               <time class="mt-1 block text-sm text-muted-foreground" datetime={todo.deadline}>
                 {todo.deadline}
               </time>
+              <form method="POST" action={`/api/todos/${todo.id}/done`} class="mt-1">
+                <button type="submit" class:list={buttonVariants({ variant: "outline", size: "sm" })}>
+                  Done
+                </button>
+              </form>
             </li>
           ))}
         </ol>
