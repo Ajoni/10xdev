@@ -74,11 +74,16 @@ export default function TodoStateSink() {
               <time className="text-muted-foreground mt-1 block text-sm" dateTime={SAMPLE_DEADLINE}>
                 {SAMPLE_DEADLINE}
               </time>
-              <form className="mt-1">
+              <div className="mt-3 flex items-center gap-2">
                 <Button type="button" variant="outline" size="sm">
-                  Done
+                  Edit
                 </Button>
-              </form>
+                <form>
+                  <Button type="button" variant="outline" size="sm">
+                    Done
+                  </Button>
+                </form>
+              </div>
             </li>
           </ol>
           <form method="get" action="/dev/todo-states" className="space-y-4">

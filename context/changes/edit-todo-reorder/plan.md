@@ -265,30 +265,30 @@ Existing open rows are editable as soon as the new grant and policy exist. Done 
 
 #### Automated
 
-- [x] 1.1 The new migration grants `authenticated` update on `description`, `complexity`, and `deadline`, and adds a permissive update policy whose `using` and `with check` require `user_id = auth.uid()` and `completed_at is null`. It does not revoke the `completed_at` grant or drop `todos_update_own_open`
-- [x] 1.2 `created_at` and `user_id` have no update grant for `authenticated`
-- [x] 1.3 `npm run lint` passes
-- [x] 1.4 `npm test` passes
+- [x] 1.1 The new migration grants `authenticated` update on `description`, `complexity`, and `deadline`, and adds a permissive update policy whose `using` and `with check` require `user_id = auth.uid()` and `completed_at is null`. It does not revoke the `completed_at` grant or drop `todos_update_own_open` — 0760706
+- [x] 1.2 `created_at` and `user_id` have no update grant for `authenticated` — 0760706
+- [x] 1.3 `npm run lint` passes — 0760706
+- [x] 1.4 `npm test` passes — 0760706
 
 #### Manual
 
-- [x] 1.5 The migration applies on local Supabase, existing open todos still appear on `/todos`, and done todos stay off the list
+- [x] 1.5 The migration applies on local Supabase, existing open todos still appear on `/todos`, and done todos stay off the list — 0760706
 
 ### Phase 2: Edit control
 
 #### Automated
 
-- [ ] 2.1 `npm run lint` passes
-- [ ] 2.2 `npm run build` passes
-- [ ] 2.3 `npm test` passes
+- [x] 2.1 `npm run lint` passes
+- [x] 2.2 `npm run build` passes
+- [x] 2.3 `npm test` passes
 
 #### Manual
 
-- [ ] 2.4 The edit control on an open row is prefilled with that row's description, stored complexity, and local deadline, and typing a new description does not change the complexity control
-- [ ] 2.5 Saving a text-only change keeps that todo on the list in the same position
-- [ ] 2.6 Saving an earlier deadline shows that todo higher in the list after reload
-- [ ] 2.7 The add form still changes its complexity guess while the description is typed
-- [ ] 2.8 The dev specimen's default row shows Done first and an Edit control after it
+- [x] 2.4 The edit control on an open row is prefilled with that row's description, stored complexity, and local deadline, and typing a new description does not change the complexity control
+- [x] 2.5 Saving a text-only change keeps that todo on the list in the same position
+- [x] 2.6 Saving an earlier deadline shows that todo higher in the list after reload
+- [x] 2.7 The add form still changes its complexity guess while the description is typed
+- [x] 2.8 The dev specimen's default row shows Done first and an Edit control after it
 
 ### Phase 3: Smoke check
 

@@ -3,6 +3,8 @@ import Layout from "@/layouts/Layout.astro";
 import WorkingList from "@/components/todos/WorkingList";
 import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { listTodos } from "@/lib/todos";
 import { createClient } from "@/lib/supabase";
 import type { Todo } from "@/types";
@@ -43,11 +45,70 @@ const serverError = formError ?? loadError;
               <time class="mt-1 block text-sm text-muted-foreground" datetime={todo.deadline}>
                 {todo.deadline}
               </time>
-              <form method="POST" action={`/api/todos/${todo.id}/done`} class="mt-1">
-                <button type="submit" class:list={buttonVariants({ variant: "outline", size: "sm" })}>
-                  Done
-                </button>
-              </form>
+              <div class="todo-actions mt-3">
+                <details class="todo-edit">
+                  <summary
+                    id={`edit-${todo.id}`}
+                    class:list={[buttonVariants({ variant: "outline", size: "sm" }), "w-fit"]}
+                  >
+                    Edit
+                  </summary>
+                </details>
+                <form method="POST" action={`/api/todos/${todo.id}/done`}>
+                  <button type="submit" class:list={buttonVariants({ variant: "outline", size: "sm" })}>
+                    Done
+                  </button>
+                </form>
+                <form
+                  method="POST"
+                  action={`/api/todos/${todo.id}/edit`}
+                  class="todo-fields space-y-3"
+                  aria-labelledby={`edit-${todo.id}`}
+                >
+                  <div>
+                    <Label htmlFor={`description-${todo.id}`} className="mb-1">
+                      Description
+                    </Label>
+                    <Input
+                      id={`description-${todo.id}`}
+                      name="description"
+                      type="text"
+                      defaultValue={todo.description}
+                      className="border-border bg-background text-foreground"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor={`complexity-${todo.id}`} className="mb-1">
+                      Complexity
+                    </Label>
+                    <select
+                      id={`complexity-${todo.id}`}
+                      name="complexity"
+                      class="border-border bg-background text-foreground h-9 w-full rounded-md border px-3 text-sm"
+                    >
+                      {[1, 2, 3, 4, 5].map((level) => (
+                        <option value={level} selected={level === todo.complexity}>
+                          {level}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <Label htmlFor={`deadline-local-${todo.id}`} className="mb-1">
+                      Deadline
+                    </Label>
+                    <Input
+                      id={`deadline-local-${todo.id}`}
+                      type="datetime-local"
+                      className="border-border bg-background text-foreground"
+                    />
+                  </div>
+                  <input type="hidden" name="deadline" id={`deadline-${todo.id}`} />
+                  <button type="submit" class:list={buttonVariants({ size: "sm" })}>
+                    Save
+                  </button>
+                </form>
+              </div>
             </li>
           ))}
         </ol>
@@ -57,3 +118,20 @@ const serverError = formError ?? loadError;
     </Card>
   </div>
 </Layout>
+
+<style>
+  .todo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .todo-fields {
+    flex-basis: 100%;
+  }
+
+  .todo-edit:not([open]) ~ .todo-fields {
+    display: none;
+  }
+</style>

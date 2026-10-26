@@ -21,6 +21,63 @@ function isComplexity(value: number): value is Todo["complexity"] {
   return value === 1 || value === 2 || value === 3 || value === 4 || value === 5;
 }
 
+function toDatetimeLocalValue(instant: string): string {
+  const clock = formatLocalClock(instant);
+  if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(clock)) {
+    return "";
+  }
+  return clock.replace(" ", "T");
+}
+
+function showEditFieldError(input: HTMLInputElement, message: string | null): void {
+  if (!input.id) {
+    return;
+  }
+  const errorId = `${input.id}-error`;
+  const existing = document.getElementById(errorId);
+  if (!message) {
+    input.removeAttribute("aria-invalid");
+    if (input.getAttribute("aria-describedby") === errorId) {
+      input.removeAttribute("aria-describedby");
+    }
+    existing?.remove();
+    return;
+  }
+  const error = existing ?? document.createElement("p");
+  error.id = errorId;
+  error.className = "text-destructive mt-1 flex items-center gap-1 text-xs";
+  error.textContent = message;
+  if (!existing) {
+    input.insertAdjacentElement("afterend", error);
+  }
+  input.setAttribute("aria-invalid", "true");
+  input.setAttribute("aria-describedby", errorId);
+}
+
+function handleEditSubmit(event: Event): void {
+  const form = event.currentTarget;
+  if (!(form instanceof HTMLFormElement)) {
+    return;
+  }
+  const description = form.querySelector<HTMLInputElement>('input[name="description"]');
+  const deadlineLocal = form.querySelector<HTMLInputElement>('input[type="datetime-local"]');
+  const deadline = form.querySelector<HTMLInputElement>('input[type="hidden"][name="deadline"]');
+  if (!description || !deadlineLocal || !deadline) {
+    return;
+  }
+  const descriptionBlank = description.value.trim() === "";
+  const deadlineMissing = deadlineLocal.value === "";
+  if (descriptionBlank || deadlineMissing) {
+    event.preventDefault();
+    showEditFieldError(description, descriptionBlank ? "Description is required" : null);
+    showEditFieldError(deadlineLocal, deadlineMissing ? "Deadline is required" : null);
+    return;
+  }
+  showEditFieldError(description, null);
+  showEditFieldError(deadlineLocal, null);
+  deadline.value = toUtcInstant(deadlineLocal.value);
+}
+
 export default function WorkingList({ serverError }: Props) {
   const [description, setDescription] = useState("");
   const [complexity, setComplexity] = useState<Todo["complexity"]>(guessComplexity(""));
@@ -41,7 +98,25 @@ export default function WorkingList({ serverError }: Props) {
         continue;
       }
       clock.textContent = formatLocalClock(instant);
+      const rowDeadline = clock.closest("li")?.querySelector<HTMLInputElement>('input[type="datetime-local"]');
+      if (!rowDeadline) {
+        continue;
+      }
+      const localValue = toDatetimeLocalValue(instant);
+      if (localValue !== "") {
+        rowDeadline.value = localValue;
+      }
     }
+
+    const forms = list.querySelectorAll<HTMLFormElement>('form[action$="/edit"]');
+    for (const form of forms) {
+      form.addEventListener("submit", handleEditSubmit);
+    }
+    return () => {
+      for (const form of forms) {
+        form.removeEventListener("submit", handleEditSubmit);
+      }
+    };
   }, []);
 
   function handleDescriptionChange(value: string) {

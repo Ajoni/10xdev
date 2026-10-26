@@ -75,8 +75,8 @@ function formActionInItem(html, description) {
   const items = html.match(/<li\b[^>]*>[\s\S]*?<\/li>/g) ?? [];
   for (const item of items) {
     if (!item.includes(description)) continue;
-    const action = item.match(/<form\b[^>]*\baction="([^"]*)"/);
-    return action ? action[1] : "";
+    const actions = [...item.matchAll(/<form\b[^>]*\baction="([^"]*)"/g)].map((match) => match[1]);
+    return actions.find((action) => action.endsWith("/done")) ?? "";
   }
   return "";
 }

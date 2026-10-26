@@ -104,3 +104,32 @@ export async function markTodoDone(supabase: SupabaseClient, userId: string, tod
 
   return error?.message ?? null;
 }
+
+export async function updateTodo(
+  supabase: SupabaseClient,
+  userId: string,
+  todoId: string,
+  input: { description: string; complexity: number; deadline: string },
+): Promise<string | null> {
+  if (!isUuid(todoId)) {
+    return null;
+  }
+
+  const complexity = asComplexity(input.complexity);
+  if (!complexity) {
+    return "Complexity must be an integer from 1 to 5";
+  }
+
+  const { error } = await supabase
+    .from("todos")
+    .update({
+      description: input.description.trim(),
+      complexity,
+      deadline: input.deadline,
+    })
+    .eq("id", todoId)
+    .eq("user_id", userId)
+    .is("completed_at", null);
+
+  return error?.message ?? null;
+}
