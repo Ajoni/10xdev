@@ -3,7 +3,7 @@ change_id: edit-todo-reorder
 title: Edit todo reorder
 status: implementing
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 archived_at: null
 ---
 

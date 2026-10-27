@@ -278,31 +278,31 @@ Existing open rows are editable as soon as the new grant and policy exist. Done 
 
 #### Automated
 
-- [x] 2.1 `npm run lint` passes
-- [x] 2.2 `npm run build` passes
-- [x] 2.3 `npm test` passes
+- [x] 2.1 `npm run lint` passes — bdb0ccf
+- [x] 2.2 `npm run build` passes — bdb0ccf
+- [x] 2.3 `npm test` passes — bdb0ccf
 
 #### Manual
 
-- [x] 2.4 The edit control on an open row is prefilled with that row's description, stored complexity, and local deadline, and typing a new description does not change the complexity control
-- [x] 2.5 Saving a text-only change keeps that todo on the list in the same position
-- [x] 2.6 Saving an earlier deadline shows that todo higher in the list after reload
-- [x] 2.7 The add form still changes its complexity guess while the description is typed
-- [x] 2.8 The dev specimen's default row shows Done first and an Edit control after it
+- [x] 2.4 The edit control on an open row is prefilled with that row's description, stored complexity, and local deadline, and typing a new description does not change the complexity control — bdb0ccf
+- [x] 2.5 Saving a text-only change keeps that todo on the list in the same position — bdb0ccf
+- [x] 2.6 Saving an earlier deadline shows that todo higher in the list after reload — bdb0ccf
+- [x] 2.7 The add form still changes its complexity guess while the description is typed — bdb0ccf
+- [x] 2.8 The dev specimen's default row shows Done first and an Edit control after it — bdb0ccf
 
 ### Phase 3: Smoke check
 
 #### Automated
 
-- [ ] 3.1 `npm run smoke` passes, including the existing unsigned `/todos` 404, order fixture, mark-done steps, and second-user privacy checks
-- [ ] 3.2 An unsigned POST to `/api/todos/00000000-0000-4000-8000-000000000000/edit` redirects to `/todos`
-- [ ] 3.3 A blank description POST to an open todo's edit route redirects to `/todos?error=` with `Description is required`, and the original four-todo order stays
-- [ ] 3.4 Editing `smoke-later-c1` to deadline `2026-10-10T15:00:00.000Z` and complexity 1 lists it first, and restoring `2026-10-20T12:00:00.000Z` returns the original four-todo order
-- [ ] 3.5 Editing `smoke-sooner-c1-newer` to `smoke-sooner-c1-newer-edited` while submitting complexity 1 leaves it below `smoke-sooner-c1-older`, and the original description is restored before mark-done
-- [ ] 3.6 Submitting complexity 5 for short `smoke-sooner-c3` shows `Complexity 5` on that row, and complexity 3 is restored before mark-done
-- [ ] 3.7 After `smoke-sooner-c1-older` is marked done, a POST to its edit route redirects to `/todos` with no `error` query and the description stays absent
-- [ ] 3.8 A second signed-in user's POST to an open todo's edit route leaves the first user's list unchanged
+- [x] 3.1 `npm run smoke` passes, including the existing unsigned `/todos` 404, order fixture, mark-done steps, and second-user privacy checks
+- [x] 3.2 An unsigned POST to `/api/todos/00000000-0000-4000-8000-000000000000/edit` redirects to `/todos`
+- [x] 3.3 A blank description POST to an open todo's edit route redirects to `/todos?error=` with `Description is required`, and the original four-todo order stays
+- [x] 3.4 Editing `smoke-later-c1` to deadline `2026-10-10T15:00:00.000Z` and complexity 1 lists it first, and restoring `2026-10-20T12:00:00.000Z` returns the original four-todo order
+- [x] 3.5 Editing `smoke-sooner-c1-newer` to `smoke-sooner-c1-newer-edited` while submitting complexity 1 leaves it below `smoke-sooner-c1-older`, and the original description is restored before mark-done
+- [x] 3.6 Submitting complexity 5 for short `smoke-sooner-c3` shows `Complexity 5` on that row, and complexity 3 is restored before mark-done
+- [x] 3.7 After `smoke-sooner-c1-older` is marked done, a POST to its edit route redirects to `/todos` with no `error` query and the description stays absent
+- [x] 3.8 A second signed-in user's POST to an open todo's edit route leaves the first user's list unchanged
 
 #### Manual
 
-- [ ] 3.9 The edit deadline matches the local clock already shown on that row, to the minute
+- [x] 3.9 The edit deadline matches the local clock already shown on that row, to the minute

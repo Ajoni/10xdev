@@ -10,11 +10,57 @@ const jar = new Map();
 const otherJar = new Map();
 const soonerDeadline = "2026-10-15T15:00:00.000Z";
 const laterDeadline = "2026-10-20T12:00:00.000Z";
+const movedDeadline = "2026-10-10T15:00:00.000Z";
 // PostgREST returns the same instants without fractional seconds.
 const soonerShown = "2026-10-15T15:00:00+00:00";
 const laterShown = "2026-10-20T12:00:00+00:00";
+const movedShown = "2026-10-10T15:00:00+00:00";
 const descriptions = ["smoke-sooner-c1-older", "smoke-sooner-c1-newer", "smoke-sooner-c3", "smoke-later-c1"];
+const editedNewer = `${descriptions[1]}-edited`;
+const originalOrder = [
+  descriptions[0],
+  soonerShown,
+  descriptions[1],
+  soonerShown,
+  descriptions[2],
+  soonerShown,
+  descriptions[3],
+  laterShown,
+];
 const remainingOrder = [descriptions[1], soonerShown, descriptions[2], soonerShown, descriptions[3], laterShown];
+const movedOrder = [
+  descriptions[3],
+  movedShown,
+  descriptions[0],
+  soonerShown,
+  descriptions[1],
+  soonerShown,
+  descriptions[2],
+  soonerShown,
+];
+const editedOrder = [descriptions[0], editedNewer, descriptions[2], descriptions[3]];
+const complexityOrder = [
+  descriptions[0],
+  soonerShown,
+  descriptions[1],
+  soonerShown,
+  descriptions[2],
+  "Complexity 5",
+  soonerShown,
+  descriptions[3],
+];
+const restoredOrder = [
+  descriptions[0],
+  soonerShown,
+  descriptions[1],
+  soonerShown,
+  descriptions[2],
+  "Complexity 3",
+  soonerShown,
+  descriptions[3],
+  laterShown,
+];
+const doneActions = {};
 let doneAction = "";
 
 function cookieHeader(cookieJar) {
@@ -81,7 +127,39 @@ function formActionInItem(html, description) {
   return "";
 }
 
+function editPath(description) {
+  return (doneActions[description] ?? "").replace(/\/done$/, "/edit");
+}
+
+function postEdit(description, fields, cookieJar = jar) {
+  return request(editPath(description), { method: "POST", form: fields, cookieJar });
+}
+
+function locationHas(location, text) {
+  if (location.includes(text)) return true;
+  try {
+    return decodeURIComponent(location).includes(text);
+  } catch {
+    return false;
+  }
+}
+
+function redirectOk(actual, expected) {
+  if (expected.location === undefined) return true;
+  const samePlace = expected.exact
+    ? actual.location === expected.location
+    : actual.location.startsWith(expected.location);
+  if (!samePlace) return false;
+  return expected.locationIncludes === undefined || locationHas(actual.location, expected.locationIncludes);
+}
+
 const doneActionPattern = /^\/api\/todos\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/done$/i;
+
+function actionsOk(expected) {
+  if (expected.doneActionFor !== undefined && !doneActionPattern.test(doneAction)) return false;
+  if (expected.doneActionsFor === undefined) return true;
+  return expected.doneActionsFor.every((description) => doneActionPattern.test(doneActions[description] ?? ""));
+}
 
 const steps = [
   ["home renders", () => request("/"), { status: 200 }],
@@ -129,19 +207,66 @@ const steps = [
   [
     "todos list in deadline, complexity, and age order",
     () => request("/todos"),
-    {
-      status: 200,
-      ordered: [
-        descriptions[0],
-        soonerShown,
-        descriptions[1],
-        soonerShown,
-        descriptions[2],
-        soonerShown,
-        descriptions[3],
-        laterShown,
-      ],
-    },
+    { status: 200, ordered: originalOrder },
+  ],
+  [
+    "capture todo done actions",
+    () => request("/todos"),
+    { status: 200, doneActionsFor: descriptions, ordered: originalOrder },
+  ],
+  [
+    "unsigned edit redirects",
+    () =>
+      request("/api/todos/00000000-0000-4000-8000-000000000000/edit", {
+        method: "POST",
+        cookieJar: new Map(),
+      }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  [
+    "blank description edit is rejected",
+    () => postEdit(descriptions[0], { description: "", complexity: "1", deadline: soonerDeadline }),
+    { status: 302, location: "/todos?error=", locationIncludes: "Description is required" },
+  ],
+  ["blank description keeps the original order", () => request("/todos"), { status: 200, ordered: originalOrder }],
+  [
+    "edit later todo to an earlier deadline",
+    () => postEdit(descriptions[3], { description: descriptions[3], complexity: "1", deadline: movedDeadline }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  ["earlier deadline lists the todo first", () => request("/todos"), { status: 200, ordered: movedOrder }],
+  [
+    "restore later todo deadline",
+    () => postEdit(descriptions[3], { description: descriptions[3], complexity: "1", deadline: laterDeadline }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  ["restored deadline matches the original order", () => request("/todos"), { status: 200, ordered: originalOrder }],
+  [
+    "edit newer todo description",
+    () => postEdit(descriptions[1], { description: editedNewer, complexity: "1", deadline: soonerDeadline }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  ["edited description keeps its place", () => request("/todos"), { status: 200, ordered: editedOrder }],
+  [
+    "restore newer todo description",
+    () => postEdit(descriptions[1], { description: descriptions[1], complexity: "1", deadline: soonerDeadline }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  [
+    "edit sooner high-complexity todo",
+    () => postEdit(descriptions[2], { description: descriptions[2], complexity: "5", deadline: soonerDeadline }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  ["submitted complexity shows on the row", () => request("/todos"), { status: 200, ordered: complexityOrder }],
+  [
+    "restore sooner high complexity",
+    () => postEdit(descriptions[2], { description: descriptions[2], complexity: "3", deadline: soonerDeadline }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  [
+    "restored todos match the original order",
+    () => request("/todos"),
+    { status: 200, ordered: restoredOrder, excludes: [editedNewer, "Complexity 5"] },
   ],
   ["older sooner todo done action", () => request("/todos"), { status: 200, doneActionFor: descriptions[0] }],
   [
@@ -151,6 +276,16 @@ const steps = [
   ],
   [
     "marked todo leaves the list in order",
+    () => request("/todos"),
+    { status: 200, excludes: [descriptions[0]], ordered: remainingOrder },
+  ],
+  [
+    "edit done todo",
+    () => postEdit(descriptions[0], { description: descriptions[0], complexity: "1", deadline: soonerDeadline }),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  [
+    "edited done todo stays off the list",
     () => request("/todos"),
     { status: 200, excludes: [descriptions[0]], ordered: remainingOrder },
   ],
@@ -181,6 +316,17 @@ const steps = [
     { status: 302, location: "/todos" },
   ],
   [
+    "second user posts an open todo edit",
+    () =>
+      postEdit(descriptions[1], { description: descriptions[1], complexity: "1", deadline: soonerDeadline }, otherJar),
+    { status: 302, location: "/todos", exact: true },
+  ],
+  [
+    "first user list unchanged after other edit",
+    () => request("/todos"),
+    { status: 200, excludes: [descriptions[0]], ordered: remainingOrder },
+  ],
+  [
     "second user posts the same done action",
     () => request(doneAction, { method: "POST", cookieJar: otherJar }),
     { status: 302, location: "/todos" },
@@ -205,19 +351,32 @@ for (const [name, run, expected] of steps) {
   const actual = await run();
   if (expected.doneActionFor !== undefined) {
     doneAction = formActionInItem(actual.body, expected.doneActionFor);
+    doneActions[expected.doneActionFor] = doneAction;
   }
-  const locationOk =
-    expected.location === undefined ||
-    (expected.exact ? actual.location === expected.location : actual.location.startsWith(expected.location));
+  if (expected.doneActionsFor !== undefined) {
+    for (const description of expected.doneActionsFor) {
+      doneActions[description] = formActionInItem(actual.body, description);
+    }
+  }
+  const locationMatches = redirectOk(actual, expected);
   const bodyMatches = bodyOk(actual.body, expected);
-  const actionOk = expected.doneActionFor === undefined || doneActionPattern.test(doneAction);
-  const ok = actual.status === expected.status && locationOk && bodyMatches && actionOk;
+  const actionOk = actionsOk(expected);
+  const ok = actual.status === expected.status && locationMatches && bodyMatches && actionOk;
   console.log(`${ok ? "PASS" : "FAIL"}  ${name}  -> ${actual.status} ${actual.location}`);
   if (!ok) {
     failed++;
     console.log(`      expected ${expected.status} ${expected.location ?? ""}`);
+    if (expected.locationIncludes !== undefined && !locationHas(actual.location, expected.locationIncludes)) {
+      console.log(`      expected location to contain ${expected.locationIncludes}`);
+    }
     if (!bodyMatches) console.log("      body check failed");
-    if (!actionOk) console.log(`      expected /api/todos/<id>/done, found ${doneAction || "(none)"}`);
+    if (!actionOk) {
+      const found =
+        expected.doneActionsFor !== undefined
+          ? expected.doneActionsFor.map((description) => doneActions[description] || "(none)").join(", ")
+          : doneAction || "(none)";
+      console.log(`      expected /api/todos/<id>/done, found ${found}`);
+    }
   }
 }
 
