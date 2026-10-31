@@ -1,7 +1,7 @@
 ---
 change_id: edit-todo-reorder
 title: Edit todo reorder
-status: implemented
+status: impl_reviewed
 created: 2026-10-25
 updated: 2026-10-27
 archived_at: null

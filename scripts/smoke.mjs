@@ -318,13 +318,17 @@ const steps = [
   [
     "second user posts an open todo edit",
     () =>
-      postEdit(descriptions[1], { description: descriptions[1], complexity: "1", deadline: soonerDeadline }, otherJar),
+      postEdit(
+        descriptions[1],
+        { description: "hijacked-by-other-user", complexity: "1", deadline: soonerDeadline },
+        otherJar,
+      ),
     { status: 302, location: "/todos", exact: true },
   ],
   [
     "first user list unchanged after other edit",
     () => request("/todos"),
-    { status: 200, excludes: [descriptions[0]], ordered: remainingOrder },
+    { status: 200, excludes: [descriptions[0], "hijacked-by-other-user"], ordered: remainingOrder },
   ],
   [
     "second user posts the same done action",
