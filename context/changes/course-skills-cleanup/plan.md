@@ -301,24 +301,24 @@ Rollback before the push is the mirror at `c:\src\10xdev-history-backup.git`. Re
 
 #### Automated
 
-- [x] 3.1 .gitignore has the nine rules and does not ignore sibling prompts or hooks.json
-- [x] 3.2 git check-ignore cites .gitignore for a skill, a grok helper, and skill-explainer.md
-- [x] 3.3 git check-ignore exits 1 for m3l2-ad-hoc-testing.md and hooks.json
-- [x] 3.4 git ls-files lists none of the nine purged paths
+- [x] 3.1 .gitignore has the nine rules and does not ignore sibling prompts or hooks.json — a7936c9
+- [x] 3.2 git check-ignore cites .gitignore for a skill, a grok helper, and skill-explainer.md — a7936c9
+- [x] 3.3 git check-ignore exits 1 for m3l2-ad-hoc-testing.md and hooks.json — a7936c9
+- [x] 3.4 git ls-files lists none of the nine purged paths — a7936c9
 - [ ] 3.5 HEAD commit stat lists only .gitignore
 
 #### Manual
 
-- [x] 3.6 Worktree 10x-plan SKILL.md is readable and git status does not list it
+- [x] 3.6 Worktree 10x-plan SKILL.md is readable and git status does not list it — a7936c9
 
 ### Phase 4: Publish master
 
 #### Automated
 
-- [ ] 4.1 force-with-lease push succeeds and HEAD equals origin/master
-- [ ] 4.2 origin/master tree omits the purged paths and still lists package.json and m3l2-ad-hoc-testing.md
+- [x] 4.1 force-with-lease push succeeds and HEAD equals origin/master
+- [x] 4.2 origin/master tree omits the purged paths and still lists package.json and m3l2-ad-hoc-testing.md
 
 #### Manual
 
-- [ ] 4.3 GitHub master has no .cursor/skills and test-plan.md still contains /10x-test-plan
-- [ ] 4.4 If the pre-rewrite commit URL still opens, record it and stop
+- [x] 4.3 GitHub master has no .cursor/skills and test-plan.md still contains /10x-test-plan
+- [x] 4.4 If the pre-rewrite commit URL still opens, record it and stop
