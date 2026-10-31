@@ -285,31 +285,31 @@ Rollback before the push is the mirror at `c:\src\10xdev-history-backup.git`. Re
 
 #### Automated
 
-- [x] 2.1 git filter-repo --version prints a version
-- [x] 2.2 git log master for the nine purged paths prints nothing
-- [x] 2.3 git rev-list --count HEAD is 43
-- [x] 2.4 HEAD package.json blob matches the mirror's HEAD package.json blob
-- [x] 2.5 Other prompt, hooks.json, and test-plan.md still exist at HEAD
-- [x] 2.6 git grep finds /10x-test-plan in context/foundation/test-plan.md
-- [x] 2.7 git remote prints nothing
+- [x] 2.1 git filter-repo --version prints a version — 27bc532
+- [x] 2.2 git log master for the nine purged paths prints nothing — 27bc532
+- [x] 2.3 git rev-list --count HEAD is 43 — 27bc532
+- [x] 2.4 HEAD package.json blob matches the mirror's HEAD package.json blob — 27bc532
+- [x] 2.5 Other prompt, hooks.json, and test-plan.md still exist at HEAD — 27bc532
+- [x] 2.6 git grep finds /10x-test-plan in context/foundation/test-plan.md — 27bc532
+- [x] 2.7 git remote prints nothing — 27bc532
 
 #### Manual
 
-- [x] 2.8 Log has none of the four dropped subjects, worktree skills are gone, and the park copy remains
+- [x] 2.8 Log has none of the four dropped subjects, worktree skills are gone, and the park copy remains — 27bc532
 
 ### Phase 3: Ignore and restore
 
 #### Automated
 
-- [ ] 3.1 .gitignore has the nine rules and does not ignore sibling prompts or hooks.json
-- [ ] 3.2 git check-ignore cites .gitignore for a skill, a grok helper, and skill-explainer.md
-- [ ] 3.3 git check-ignore exits 1 for m3l2-ad-hoc-testing.md and hooks.json
-- [ ] 3.4 git ls-files lists none of the nine purged paths
+- [x] 3.1 .gitignore has the nine rules and does not ignore sibling prompts or hooks.json
+- [x] 3.2 git check-ignore cites .gitignore for a skill, a grok helper, and skill-explainer.md
+- [x] 3.3 git check-ignore exits 1 for m3l2-ad-hoc-testing.md and hooks.json
+- [x] 3.4 git ls-files lists none of the nine purged paths
 - [ ] 3.5 HEAD commit stat lists only .gitignore
 
 #### Manual
 
-- [ ] 3.6 Worktree 10x-plan SKILL.md is readable and git status does not list it
+- [x] 3.6 Worktree 10x-plan SKILL.md is readable and git status does not list it
 
 ### Phase 4: Publish master
 

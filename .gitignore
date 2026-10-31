@@ -26,3 +26,14 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Local 10x course skills and CLI binding. Kept on disk, never committed.
+.cursor/skills/
+.agents/skills/
+.claude/skills/
+.grok/skills/
+.cursor/.10x-cli-manifest.json
+.cursor/rules/10x-course.mdc
+.cursor/prompts/skill-explainer.md
+skills-lock.json
+.10x-cli.json
