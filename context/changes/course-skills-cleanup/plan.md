@@ -273,29 +273,29 @@ Rollback before the push is the mirror at `c:\src\10xdev-history-backup.git`. Re
 
 #### Automated
 
-- [x] 1.1 Mirror HEAD is 3c0120bedebed8661112330a31291159e795e845
-- [x] 1.2 Parked tree contains the 10x-plan skill, both CLI helper copies, .10x-cli.json, and skill-explainer.md
-- [x] 1.3 This clone HEAD is still 3c0120b and tracked files are clean
+- [x] 1.1 Mirror HEAD is 3c0120bedebed8661112330a31291159e795e845 — d3a2207
+- [x] 1.2 Parked tree contains the 10x-plan skill, both CLI helper copies, .10x-cli.json, and skill-explainer.md — d3a2207
+- [x] 1.3 This clone HEAD is still 3c0120b and tracked files are clean — d3a2207
 
 #### Manual
 
-- [x] 1.4 Parked 10x-plan SKILL.md opens and contains the course skill frontmatter
+- [x] 1.4 Parked 10x-plan SKILL.md opens and contains the course skill frontmatter — d3a2207
 
 ### Phase 2: Rewrite history
 
 #### Automated
 
-- [ ] 2.1 git filter-repo --version prints a version
-- [ ] 2.2 git log master for the nine purged paths prints nothing
-- [ ] 2.3 git rev-list --count HEAD is 43
-- [ ] 2.4 HEAD package.json blob matches the mirror's HEAD package.json blob
-- [ ] 2.5 Other prompt, hooks.json, and test-plan.md still exist at HEAD
-- [ ] 2.6 git grep finds /10x-test-plan in context/foundation/test-plan.md
-- [ ] 2.7 git remote prints nothing
+- [x] 2.1 git filter-repo --version prints a version
+- [x] 2.2 git log master for the nine purged paths prints nothing
+- [x] 2.3 git rev-list --count HEAD is 43
+- [x] 2.4 HEAD package.json blob matches the mirror's HEAD package.json blob
+- [x] 2.5 Other prompt, hooks.json, and test-plan.md still exist at HEAD
+- [x] 2.6 git grep finds /10x-test-plan in context/foundation/test-plan.md
+- [x] 2.7 git remote prints nothing
 
 #### Manual
 
-- [ ] 2.8 Log has none of the four dropped subjects, worktree skills are gone, and the park copy remains
+- [x] 2.8 Log has none of the four dropped subjects, worktree skills are gone, and the park copy remains
 
 ### Phase 3: Ignore and restore
 
