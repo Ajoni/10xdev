@@ -273,13 +273,13 @@ Rollback before the push is the mirror at `c:\src\10xdev-history-backup.git`. Re
 
 #### Automated
 
-- [x] 1.1 Mirror HEAD is 3c0120bedebed8661112330a31291159e795e845 — d3a2207
-- [x] 1.2 Parked tree contains the 10x-plan skill, both CLI helper copies, .10x-cli.json, and skill-explainer.md — d3a2207
-- [x] 1.3 This clone HEAD is still 3c0120b and tracked files are clean — d3a2207
+- [x] 1.1 Mirror HEAD is 3c0120bedebed8661112330a31291159e795e845 — c3609c4
+- [x] 1.2 Parked tree contains the 10x-plan skill, both CLI helper copies, .10x-cli.json, and skill-explainer.md — c3609c4
+- [x] 1.3 This clone HEAD is still 3c0120b and tracked files are clean — c3609c4
 
 #### Manual
 
-- [x] 1.4 Parked 10x-plan SKILL.md opens and contains the course skill frontmatter — d3a2207
+- [x] 1.4 Parked 10x-plan SKILL.md opens and contains the course skill frontmatter — c3609c4
 
 ### Phase 2: Rewrite history
 
@@ -305,7 +305,7 @@ Rollback before the push is the mirror at `c:\src\10xdev-history-backup.git`. Re
 - [x] 3.2 git check-ignore cites .gitignore for a skill, a grok helper, and skill-explainer.md — a7936c9
 - [x] 3.3 git check-ignore exits 1 for m3l2-ad-hoc-testing.md and hooks.json — a7936c9
 - [x] 3.4 git ls-files lists none of the nine purged paths — a7936c9
-- [ ] 3.5 HEAD commit stat lists only .gitignore
+- [x] 3.5 HEAD commit stat lists only .gitignore
 
 #### Manual
 
