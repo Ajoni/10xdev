@@ -1,10 +1,10 @@
 ---
 change_id: edit-todo-reorder
 title: Edit todo reorder
-status: impl_reviewed
+status: archived
 created: 2026-10-25
-updated: 2026-10-27
-archived_at: null
+updated: 2026-10-31
+archived_at: 2026-10-31T10:34:04Z
 ---
 
 ## Notes

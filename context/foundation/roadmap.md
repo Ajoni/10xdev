@@ -3,7 +3,7 @@ project: "Work slop"
 version: 1
 status: draft
 created: 2026-10-07
-updated: 2026-10-25
+updated: 2026-10-31
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -43,7 +43,7 @@ Busy professionals forget todos and deadlines when those live in their heads, an
 | ---- | ------------------- | --------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------ | -------- |
 | S-01 | add-ordered-todo    | add a todo and see only their own working list, ordered by sooner deadline, then lower complexity        | —             | US-01, FR-001, FR-004, FR-007  | done |
 | S-02 | mark-todo-done      | mark a todo done and have it leave the working list, with no history view                                 | S-01          | US-01, FR-003, FR-005          | done |
-| S-03 | edit-todo-reorder   | edit a todo and keep it on the working list, reordered when the deadline or complexity changes            | S-01          | FR-002                         | in-progress |
+| S-03 | edit-todo-reorder   | edit a todo and keep it on the working list, reordered when the deadline or complexity changes            | S-01          | FR-002                         | done |
 
 ## Baseline
 
@@ -97,7 +97,7 @@ None. Sign-in and the interface are already in place. Saving a todo, limiting it
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Sequenced beside mark-done, not inside add, so a change to deadline or complexity stays an edit of a saved todo and cannot drop it from the list.
-- **Status:** in-progress
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -129,3 +129,4 @@ None. The PRD lists no open questions, and sequencing did not surface a new cros
 
 - **S-01: user can add a todo with what needs to be done, a guessed complexity default they can override, and a deadline, and see only their own working list ordered by sooner deadline, then lower complexity; a person who is not signed in and opens that list gets a not-found response.** — Archived 2026-10-25 → `context/archive/2026-10-10-add-ordered-todo/`. Lesson: —.
 - **S-02: user can mark a todo done and have it leave the working list, with no history view.** — Archived 2026-10-25 → `context/archive/2026-10-25-mark-todo-done/`. Lesson: —.
+- **S-03: user can edit a todo and keep it on the working list, reordered when the deadline or complexity changes.** — Archived 2026-10-31 → `context/archive/2026-10-25-edit-todo-reorder/`. Lesson: —.
