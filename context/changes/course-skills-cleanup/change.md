@@ -1,7 +1,7 @@
 ---
 change_id: course-skills-cleanup
 title: Ignore course skills and purge them from git history
-status: implementing
+status: implemented
 created: 2026-10-31
 updated: 2026-10-31
 archived_at: null

@@ -315,10 +315,10 @@ Rollback before the push is the mirror at `c:\src\10xdev-history-backup.git`. Re
 
 #### Automated
 
-- [x] 4.1 force-with-lease push succeeds and HEAD equals origin/master
-- [x] 4.2 origin/master tree omits the purged paths and still lists package.json and m3l2-ad-hoc-testing.md
+- [x] 4.1 force-with-lease push succeeds and HEAD equals origin/master — 75d6f65
+- [x] 4.2 origin/master tree omits the purged paths and still lists package.json and m3l2-ad-hoc-testing.md — 75d6f65
 
 #### Manual
 
-- [x] 4.3 GitHub master has no .cursor/skills and test-plan.md still contains /10x-test-plan
-- [x] 4.4 If the pre-rewrite commit URL still opens, record it and stop
+- [x] 4.3 GitHub master has no .cursor/skills and test-plan.md still contains /10x-test-plan — 75d6f65
+- [x] 4.4 If the pre-rewrite commit URL still opens, record it and stop — 75d6f65
