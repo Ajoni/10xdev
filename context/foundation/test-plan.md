@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-10-18
+> Last updated: 2026-10-31
 
 ## 1. Strategy
 
@@ -61,17 +61,17 @@ Each row opens its own change folder via `/10x-new`. The orchestrator updates St
 
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|------------|-----------------|---------------|------------|--------|---------------|
-| 1 | Private ordered list | Prove another person cannot see or change a todo, the top item is the next action, an unsigned request is not-found, and a UTC round-trip keeps the same top item. Bootstrap the runner and run it in CI. | #1, #2, #4, #6 | runner bootstrap, unit or integration | change opened | context/changes/testing-private-ordered-list/ |
+| 1 | Private ordered list | Prove another person cannot see or change a todo, the top item is the next action, an unsigned request is not-found, and a UTC round-trip keeps the same top item. Bootstrap the runner and run it in CI. | #1, #2, #4, #6 | runner bootstrap, unit or integration | complete | context/archive/2026-10-18-testing-private-ordered-list/ |
 | 2 | Deployed list parity | Fail the preview check when the deployed build returns an empty, unordered, or broken list for the add-and-list case that passes locally. | #3 | preview smoke | not started | — |
 | 3 | Untrusted input | Prove an out-of-range complexity, or a deadline the person did not enter, does not decide who is on top. | #5 | API integration | not started | — |
 
 ## 4. Stack
 
-Test-base profile: **none**. No Vitest, Jest, or Playwright config. The product check is `scripts/smoke.mjs`. Skill `*.test.mjs` files are not the app.
+Test-base profile: **Vitest** for pure rules, and `scripts/smoke.mjs` for the preview. No Jest or Playwright config. Skill `*.test.mjs` files are not the app.
 
 | Layer | Tool | Version | Notes |
 |-------|------|---------|-------|
-| unit + integration | none yet — Vitest | — | Phase 1. Astro documents `getViteConfig()` for Vitest. Checked 2026-10-18. Vitest covers the rule. The Worker preview stays on smoke. |
+| unit + integration | Vitest | ^5.0.5 | `npm test` (`vitest run`) in CI job `ci`, with no Supabase env. `vitest.config.ts` uses `getViteConfig()`, environment `node`, `TZ=America/Los_Angeles`, include `src/**/*.{test,spec}.ts`, and drops plugins named `vite-plugin-cloudflare*`. Checked 2026-10-31. The Worker preview stays on smoke. |
 | API mocking | none | — | Keep the ownership check real. CI already starts local Supabase for smoke. |
 | e2e | none | — | Excluded (§7). Astro documents Playwright. Checked 2026-10-18. |
 | preview smoke | `scripts/smoke.mjs` | — | CI job `smoke` runs it against the production preview and local Supabase. Phase 2 tightens that run. |
@@ -100,11 +100,11 @@ Filled in when the matching phase ships. Until then, the pointer below is the pa
 
 ### 6.1 Adding a unit test
 
-TBD — see §3 Phase 1 for next-action order and the UTC deadline round-trip.
+Put the file in `src/**/*.{test,spec}.ts` and run `npm test`. The worker timezone is `America/Los_Angeles` from `vitest.config.ts`; do not set `TZ` inside the test. Import the pure function and assert literals. Shipped examples: `guessComplexity` boundaries in `src/lib/todos.test.ts` (trimmed lengths 0 and 19 → 1, 20 and 49 → 2, 50 and 199 → 3, 200 and 999 → 4, 1000 → 5; surrounding spaces do not change the bucket), and the Los Angeles midnight pair in `src/lib/deadlines.test.ts`. A unit does not post a todo and does not sort rows.
 
 ### 6.2 Adding an integration test
 
-TBD — see §3 Phase 1 for two-person visibility and unsigned not-found.
+Extend `scripts/smoke.mjs` and run it against the production preview with local Supabase. Shipped checks: a second cookie jar's `GET /todos` excludes the first user's descriptions; unsigned `GET /todos` is status 404, includes `Not found`, and excludes `Add todo` and `id="todo-list"`. Do not add a second Supabase harness for the same checks.
 
 ### 6.3 Adding an e2e test
 
@@ -112,15 +112,15 @@ Browser and visual suites are excluded (§7). Deployed-list signal stays on the 
 
 ### 6.4 Adding a test for a new API endpoint
 
-TBD — see §3 Phase 1 for ownership, and §3 Phase 3 for out-of-range complexity that must not decide order.
+Ownership of the working list is the smoke second-session exclusion (§6.2), not a new route. Out-of-range complexity is still §3 Phase 3.
 
 ### 6.5 Adding a test for order or a deadline
 
-TBD — see §3 Phase 1 for sooner deadline, then lower complexity, including equal deadlines and the UTC round-trip.
+Order is the smoke HTML step: sooner deadline, then lower complexity, then earlier `created_at`. Do not copy the `.order()` arguments into an expected list. The UTC round-trip is the unit pair in `src/lib/deadlines.test.ts`: `2026-10-14T23:30` stores `2026-10-15T06:30:00.000Z` and displays `2026-10-14 23:30`; `2026-10-15T00:30` stores `2026-10-15T07:30:00.000Z` and displays `2026-10-15 00:30`. A pass that holds only in the developer timezone is not proof.
 
 ### 6.6 Per-rollout-phase notes
 
-Empty until a phase ships.
+- **Phase 1 — Private ordered list** (archived 2026-10-31 → `context/archive/2026-10-18-testing-private-ordered-list/`). See-path only: there is no edit or delete API, so "cannot change" is not an update request. The clock effect only writes `textContent` and has no browser test.
 
 ## 7. What We Deliberately Don't Test
 
