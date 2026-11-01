@@ -327,13 +327,13 @@ No database change. A bookmarked `/dashboard` returns 404. There is no compatibi
 
 #### Automated
 
-- [x] 4.1 `npm run lint` passes
-- [x] 4.2 `Welcome.astro`, `Topbar.astro`, `src/pages/auth/signin.astro`, `src/pages/auth/signup.astro`, `src/pages/auth/confirm-email.astro`, and `src/components/auth/SignUpForm.tsx` contain none of `bg-cosmic`, `text-purple-`, `text-blue-`, `bg-purple-`, `from-blue-`, or `from-pink-`
-- [x] 4.3 `src/styles/global.css` does not define `bg-cosmic`
-- [x] 4.4 `npm run smoke` passes
+- [x] 4.1 `npm run lint` passes — f3ae684
+- [x] 4.2 `Welcome.astro`, `Topbar.astro`, `src/pages/auth/signin.astro`, `src/pages/auth/signup.astro`, `src/pages/auth/confirm-email.astro`, and `src/components/auth/SignUpForm.tsx` contain none of `bg-cosmic`, `text-purple-`, `text-blue-`, `bg-purple-`, `from-blue-`, or `from-pink-` — f3ae684
+- [x] 4.3 `src/styles/global.css` does not define `bg-cosmic` — f3ae684
+- [x] 4.4 `npm run smoke` passes — f3ae684
 
 #### Manual
 
-- [x] 4.5 Home, sign-in, sign-up, and confirm-email use the light page background, foreground text, and the card and button treatment already on `/todos`
-- [x] 4.6 The home title is still "Work slop" and the hero paragraph is unchanged
-- [x] 4.7 Sign in still opens `/auth/signin` and Sign up still opens `/auth/signup`
+- [x] 4.5 Home, sign-in, sign-up, and confirm-email use the light page background, foreground text, and the card and button treatment already on `/todos` — f3ae684
+- [x] 4.6 The home title is still "Work slop" and the hero paragraph is unchanged — f3ae684
+- [x] 4.7 Sign in still opens `/auth/signin` and Sign up still opens `/auth/signup` — f3ae684
