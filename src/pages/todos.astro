@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import Topbar from "@/components/Topbar.astro";
 import WorkingList from "@/components/todos/WorkingList";
 import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -30,92 +31,95 @@ const serverError = formError ?? loadError;
 ---
 
 <Layout title="Todos">
-  <div class="bg-background flex min-h-screen items-center justify-center p-4">
-    <Card className="w-full max-w-xl gap-0 p-8">
-      <h1 class="mb-6 text-center text-2xl font-bold text-foreground">Todos</h1>
+  <div class="bg-background flex min-h-screen flex-col p-4 sm:p-8">
+    <Topbar />
+    <div class="flex flex-1 items-center justify-center">
+      <Card className="w-full max-w-xl gap-0 p-8">
+        <h1 class="mb-6 text-center text-2xl font-bold text-foreground">Todos</h1>
 
-      {loadError ? null : todos.length === 0 ? (
-        <p class="mb-6 text-sm text-muted-foreground">No todos yet.</p>
-      ) : (
-        <ol id="todo-list" class="mb-6 space-y-3">
-          {todos.map((todo) => (
-            <li class="rounded-lg border border-border px-4 py-3">
-              <p class="break-words">{todo.description}</p>
-              <p class="mt-1 text-sm text-muted-foreground">Complexity {todo.complexity}</p>
-              <time class="mt-1 block text-sm text-muted-foreground" datetime={todo.deadline}>
-                {todo.deadline}
-              </time>
-              <div class="todo-actions mt-3">
-                <details class="todo-edit">
-                  <summary
-                    id={`edit-${todo.id}`}
-                    class:list={[buttonVariants({ variant: "outline", size: "sm" }), "w-fit"]}
-                  >
-                    Edit
-                  </summary>
-                </details>
-                <form method="POST" action={`/api/todos/${todo.id}/done`}>
-                  <button type="submit" class:list={buttonVariants({ variant: "outline", size: "sm" })}>
-                    Done
-                  </button>
-                </form>
-                <form
-                  method="POST"
-                  action={`/api/todos/${todo.id}/edit`}
-                  class="todo-fields space-y-3"
-                  aria-labelledby={`edit-${todo.id}`}
-                >
-                  <div>
-                    <Label htmlFor={`description-${todo.id}`} className="mb-1">
-                      Description
-                    </Label>
-                    <Input
-                      id={`description-${todo.id}`}
-                      name="description"
-                      type="text"
-                      defaultValue={todo.description}
-                      className="border-border bg-background text-foreground"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor={`complexity-${todo.id}`} className="mb-1">
-                      Complexity
-                    </Label>
-                    <select
-                      id={`complexity-${todo.id}`}
-                      name="complexity"
-                      class="border-border bg-background text-foreground h-9 w-full rounded-md border px-3 text-sm"
+        {loadError ? null : todos.length === 0 ? (
+          <p class="mb-6 text-sm text-muted-foreground">No todos yet.</p>
+        ) : (
+          <ol id="todo-list" class="mb-6 space-y-3">
+            {todos.map((todo) => (
+              <li class="rounded-lg border border-border px-4 py-3">
+                <p class="break-words">{todo.description}</p>
+                <p class="mt-1 text-sm text-muted-foreground">Complexity {todo.complexity}</p>
+                <time class="mt-1 block text-sm text-muted-foreground" datetime={todo.deadline}>
+                  {todo.deadline}
+                </time>
+                <div class="todo-actions mt-3">
+                  <details class="todo-edit">
+                    <summary
+                      id={`edit-${todo.id}`}
+                      class:list={[buttonVariants({ variant: "outline", size: "sm" }), "w-fit"]}
                     >
-                      {[1, 2, 3, 4, 5].map((level) => (
-                        <option value={level} selected={level === todo.complexity}>
-                          {level}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <Label htmlFor={`deadline-local-${todo.id}`} className="mb-1">
-                      Deadline
-                    </Label>
-                    <Input
-                      id={`deadline-local-${todo.id}`}
-                      type="datetime-local"
-                      className="border-border bg-background text-foreground"
-                    />
-                  </div>
-                  <input type="hidden" name="deadline" id={`deadline-${todo.id}`} />
-                  <button type="submit" class:list={buttonVariants({ size: "sm" })}>
-                    Save
-                  </button>
-                </form>
-              </div>
-            </li>
-          ))}
-        </ol>
-      )}
+                      Edit
+                    </summary>
+                  </details>
+                  <form method="POST" action={`/api/todos/${todo.id}/done`}>
+                    <button type="submit" class:list={buttonVariants({ variant: "outline", size: "sm" })}>
+                      Done
+                    </button>
+                  </form>
+                  <form
+                    method="POST"
+                    action={`/api/todos/${todo.id}/edit`}
+                    class="todo-fields space-y-3"
+                    aria-labelledby={`edit-${todo.id}`}
+                  >
+                    <div>
+                      <Label htmlFor={`description-${todo.id}`} className="mb-1">
+                        Description
+                      </Label>
+                      <Input
+                        id={`description-${todo.id}`}
+                        name="description"
+                        type="text"
+                        defaultValue={todo.description}
+                        className="border-border bg-background text-foreground"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor={`complexity-${todo.id}`} className="mb-1">
+                        Complexity
+                      </Label>
+                      <select
+                        id={`complexity-${todo.id}`}
+                        name="complexity"
+                        class="border-border bg-background text-foreground h-9 w-full rounded-md border px-3 text-sm"
+                      >
+                        {[1, 2, 3, 4, 5].map((level) => (
+                          <option value={level} selected={level === todo.complexity}>
+                            {level}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <Label htmlFor={`deadline-local-${todo.id}`} className="mb-1">
+                        Deadline
+                      </Label>
+                      <Input
+                        id={`deadline-local-${todo.id}`}
+                        type="datetime-local"
+                        className="border-border bg-background text-foreground"
+                      />
+                    </div>
+                    <input type="hidden" name="deadline" id={`deadline-${todo.id}`} />
+                    <button type="submit" class:list={buttonVariants({ size: "sm" })}>
+                      Save
+                    </button>
+                  </form>
+                </div>
+              </li>
+            ))}
+          </ol>
+        )}
 
-      <WorkingList serverError={serverError} client:load />
-    </Card>
+        <WorkingList serverError={serverError} client:load />
+      </Card>
+    </div>
   </div>
 </Layout>
 

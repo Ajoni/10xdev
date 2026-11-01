@@ -22,7 +22,7 @@ A visit to `/dashboard` returns status 404 for an anonymous person, a signed-in 
 
 A signed-in person on `/` sees Todos in the top bar, next to their email and Sign out. That link opens `/todos`. The hero still shows Sign in and Sign up. An anonymous home page has no todos link and no dashboard link.
 
-The todos card starts with Home and Sign out. Home opens `/`. Sign out posts to `/api/auth/signout` and lands on `/`.
+The todos page uses that same `Topbar` above the card. On `/todos` the signed-in link says Home and opens `/`. The email and Sign out stay. Sign out posts to `/api/auth/signout` and lands on `/`.
 
 Home, the top bar, sign-in, sign-up, and confirm-email use the same light tokens as `/todos`. The words on those pages stay the same. `npm run smoke` passes against a running server.
 
@@ -40,7 +40,6 @@ Home, the top bar, sign-in, sign-up, and confirm-email use the same light tokens
 - Serving the unsigned-list not-found card for `/dashboard`.
 - Adding `/todos` to a redirect-protected list, or changing the unsigned `/todos` 404.
 - Hiding the hero Sign in and Sign up links when someone is signed in.
-- Mounting `Topbar` on the todos page.
 - Changing the sign-in destination or the sign-out destination.
 - Changing todo create, edit, done, ordering, or validation.
 - Changing token values, enabling dark mode, or running `shadcn init`.
@@ -49,11 +48,11 @@ Home, the top bar, sign-in, sign-up, and confirm-email use the same light tokens
 
 ## Implementation Approach
 
-Remove the dashboard page and its middleware redirect together, then point smoke at status 404. Replace the signed-in top-bar Dashboard anchor with Todos. Add Home and Sign out on the todos card with the outline buttons that page already uses. Sign out stays a POST to the existing endpoint. Last, move the home page, the top bar, and the three auth shells onto the light role classes `/todos` already uses, and delete the unused `bg-cosmic` utility.
+Remove the dashboard page and its middleware redirect together, then point smoke at status 404. Replace the signed-in top-bar Dashboard anchor with Todos. Mount that same top bar on the todos page, with Home in place of Todos. Sign out stays a POST to the existing endpoint. Last, move the home page, the top bar, and the three auth shells onto the light role classes `/todos` already uses, and delete the unused `bg-cosmic` utility.
 
 ## Critical Implementation Details
 
-- **User experience spec.** The only home link to `/todos` is the signed-in top-bar anchor, labeled `Todos`. The hero anchors stay `/auth/signin` and `/auth/signup` for every visitor. On the todos card, Home and Sign out sit in one row before the heading. Both use `buttonVariants({ variant: "outline", size: "sm" })`. Sign out is a `POST` form whose action is `/api/auth/signout`. Phase 4 changes color and decoration only. Visible strings that stay: `Work slop`, the hero paragraph, `Sign in`, `Sign up`, `Not signed in`, the email, `Todos`, `Sign out`, the auth headings, both confirm-email copy branches, and the cross-links between sign-in and sign-up.
+- **User experience spec.** The only home link to `/todos` is the signed-in top-bar anchor, labeled `Todos`. The hero anchors stay `/auth/signin` and `/auth/signup` for every visitor. The todos page mounts the same `Topbar`. There the signed-in anchor says `Home` and its href is `/`. The email and the sign-out form stay. Sign out is a `POST` form whose action is `/api/auth/signout`. Phase 4 changes color and decoration only, and keeps this path-dependent label. Visible strings that stay: `Work slop`, the hero paragraph, `Sign in`, `Sign up`, `Not signed in`, the email, `Todos`, `Home`, `Sign out`, the auth headings, both confirm-email copy branches, and the cross-links between sign-in and sign-up.
 - **Timing & lifecycle.** `PROTECTED_ROUTES` contains only `/dashboard`. The redirect branch has to leave in the same phase as the page file. Leaving it keeps an unsigned 302, which smoke will still see because requests use `redirect: "manual"`. Do not rewrite `/dashboard` to `/not-found`. There is no `src/pages/404.astro`. `GET /dashboard` itself must return status 404, and the body must not contain the old dashboard heading or the sentence about authenticated users.
 
 ## Phase 1: Remove the dashboard route
@@ -157,17 +156,19 @@ The signed-in top bar points at the todo list. The hero is unchanged. An anonymo
 
 ### Overview
 
-The todos card gains Home and Sign out, using the outline buttons already on that card. The sign-out endpoint is unchanged.
+The todos page mounts the home `Topbar` above the card. On `/todos` that bar's signed-in link says Home. The email and Sign out stay. The sign-out endpoint is unchanged.
+
+**Placement note (2026-11-01):** These controls were first inside the card, then in a separate bar. They now use `src/components/Topbar.astro`, the same bar as the home page, at the user's request. On `/` the link says Todos. On `/todos` it says Home. Progress rows 3.3 and 3.4 keep their original titles.
 
 ### Changes Required:
 
 #### 1. Card controls
 
-**File**: `src/pages/todos.astro`
+**File**: `src/pages/todos.astro`, `src/components/Topbar.astro`
 
-**Intent**: Let a signed-in person leave the list for home or end the session from the list.
+**Intent**: Let a signed-in person leave the list for home or end the session from the list, using the home top bar.
 
-**Contract**: Inside the `Card`, before the `h1`, one row contains an anchor and a form. The anchor's href is `/`, its text is `Home`, and its classes come from `buttonVariants({ variant: "outline", size: "sm" })`. The form is `method="POST"` and `action="/api/auth/signout"`. Its submit button text is `Sign out` and it uses the same `buttonVariants` call. `Topbar` is not imported. List loading, edit, and done stay as they are.
+**Contract**: `todos.astro` renders `Topbar` above the `Card`. `Topbar` is the same component the home page uses. When the path starts with `/todos`, the signed-in anchor's href is `/` and its text is `Home`. Otherwise that anchor's href is `/todos` and its text is `Todos`. The email and the sign-out form stay. The form is `method="POST"` and `action="/api/auth/signout"`. List loading, edit, and done stay as they are.
 
 #### 2. List smoke checks
 
@@ -186,8 +187,8 @@ The todos card gains Home and Sign out, using the outline buttons already on tha
 
 #### Manual Verification:
 
-- Home on the todos card opens `/`
-- Sign out on the todos card ends the session and opens `/`
+- Home in the todos top bar opens `/`
+- Sign out in the todos top bar ends the session and opens `/`
 
 **Implementation Note**: After completing this phase and all automated verification passes, pause here for manual confirmation from the human that the manual testing was successful before proceeding to the next phase.
 
@@ -207,7 +208,7 @@ The home page, the top bar, and the auth shells drop the cosmic decoration and u
 
 **Intent**: Make the public home page the same light surface as the list.
 
-**Contract**: Remove the orbs, the star-field element, `bg-cosmic`, gradient title classes, and literal purple, blue, pink, and white-alpha classes. The page shell uses `bg-background`. The title uses `text-foreground`. The paragraph uses `text-muted-foreground`. The Sign in anchor uses `buttonVariants()` and the Sign up anchor uses `buttonVariants({ variant: "outline" })`, both from `src/components/ui/button`. The top bar uses `border-border`, `bg-card`, `text-foreground`, and `text-muted-foreground`. Href values and visible strings stay as Phase 2 left them, including the hero's Sign in and Sign up for every visitor.
+**Contract**: Remove the orbs, the star-field element, `bg-cosmic`, gradient title classes, and literal purple, blue, pink, and white-alpha classes. The page shell uses `bg-background`. The title uses `text-foreground`. The paragraph uses `text-muted-foreground`. The Sign in anchor uses `buttonVariants()` and the Sign up anchor uses `buttonVariants({ variant: "outline" })`, both from `src/components/ui/button`. The top bar uses `border-border`, `bg-card`, `text-foreground`, and `text-muted-foreground`. The signed-in anchor stays path-dependent: `Todos` and `/todos` on `/`, `Home` and `/` on `/todos`. The hero's Sign in and Sign up stay for every visitor.
 
 #### 2. Auth shells
 
@@ -302,25 +303,25 @@ No database change. A bookmarked `/dashboard` returns 404. There is no compatibi
 
 #### Automated
 
-- [x] 2.1 `npm run lint` passes
-- [x] 2.2 `npm run smoke` passes: anonymous `GET /` is 200 and excludes `href="/todos"` and `href="/dashboard"`; signed-in `GET /` is 200 and includes `href="/todos"` and `Todos`, and excludes `href="/dashboard"`
+- [x] 2.1 `npm run lint` passes — c841f43
+- [x] 2.2 `npm run smoke` passes: anonymous `GET /` is 200 and excludes `href="/todos"` and `href="/dashboard"`; signed-in `GET /` is 200 and includes `href="/todos"` and `Todos`, and excludes `href="/dashboard"` — c841f43
 
 #### Manual
 
-- [x] 2.3 A signed-in home top bar shows the email, Todos, and Sign out, and Todos opens `/todos`
-- [x] 2.4 The hero still shows Sign in and Sign up
+- [x] 2.3 A signed-in home top bar shows the email, Todos, and Sign out, and Todos opens `/todos` — c841f43
+- [x] 2.4 The hero still shows Sign in and Sign up — c841f43
 
 ### Phase 3: Add home and sign-out on the todos view
 
 #### Automated
 
-- [ ] 3.1 `npm run lint` passes
-- [ ] 3.2 `npm run smoke` passes: a signed-in `GET /todos` includes `Home`, `href="/"`, `Sign out`, and `action="/api/auth/signout"`, and `POST /api/auth/signout` returns 302 to `/`
+- [x] 3.1 `npm run lint` passes
+- [x] 3.2 `npm run smoke` passes: a signed-in `GET /todos` includes `Home`, `href="/"`, `Sign out`, and `action="/api/auth/signout"`, and `POST /api/auth/signout` returns 302 to `/`
 
 #### Manual
 
-- [ ] 3.3 Home on the todos card opens `/`
-- [ ] 3.4 Sign out on the todos card ends the session and opens `/`
+- [x] 3.3 Home on the todos card opens `/`
+- [x] 3.4 Sign out on the todos card ends the session and opens `/`
 
 ### Phase 4: Restyle the landing and auth shells
 

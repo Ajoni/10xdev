@@ -12,7 +12,7 @@ The dashboard is a leftover stub. The working list already lives at `/todos`, an
 
 ## Desired End State
 
-`/dashboard` is gone and returns status 404 for everyone. A signed-in home top bar links to `/todos`; the hero still offers Sign in and Sign up. The todos card has Home and Sign out. Home, the top bar, sign-in, sign-up, and confirm-email use the same light tokens as the list, with the same words as today.
+`/dashboard` is gone and returns status 404 for everyone. A signed-in home top bar links to `/todos`; the hero still offers Sign in and Sign up. The todos page mounts that same top bar. On the list it shows the email, Home, and Sign out. Home, the top bar, sign-in, sign-up, and confirm-email use the same light tokens as the list, with the same words as today.
 
 ## Key Decisions Made
 
@@ -22,7 +22,7 @@ The dashboard is a leftover stub. The working list already lives at `/todos`, an
 | Not-found card | Stays the unsigned `/todos` response only | That card always offers Sign in, which is the list gate. |
 | Signed-in todos link | Top-bar anchor labeled Todos | The top bar is the home control that already changes when someone is signed in. |
 | Hero | Sign in and Sign up stay for every visitor | The request was one signed-in link, and the hero is the public pitch. |
-| Todos controls | Outline Home anchor and Sign out POST on the card | The list already draws Edit and Done that way, and sign-out already returns to `/`. |
+| Todos controls | The home `Topbar` on the list, with Home in place of Todos | One bar for both pages. Sign out stays the existing POST, and the list link would only point at the page you are already on. |
 | Public shells | Home, top bar, and auth pages use the light todos tokens | Otherwise those pages stay on the dark cosmic shell after the list was restyled. |
 
 ## Scope
@@ -46,7 +46,7 @@ The dashboard is a leftover stub. The working list already lives at `/todos`, an
 
 ## Architecture / Approach
 
-The middleware stops special-casing `/dashboard`, so the missing page is a normal 404. The `/todos` rewrite is left alone. Navigation is two existing surfaces: the home top bar gains the list link, and the todos card gains Home plus the current sign-out form. The last phase swaps cosmic classes for the role classes `/todos` and `/not-found` already use, without changing hrefs or copy.
+The middleware stops special-casing `/dashboard`, so the missing page is a normal 404. The `/todos` rewrite is left alone. Navigation is one top bar: on `/` the signed-in link is Todos, and on `/todos` that link is Home. Sign out stays in the bar. The last phase swaps cosmic classes for the role classes `/todos` and `/not-found` already use, without changing hrefs or copy.
 
 ## Phases at a Glance
 
@@ -54,7 +54,7 @@ The middleware stops special-casing `/dashboard`, so the missing page is a norma
 | --- | --- | --- |
 | 1. Remove the dashboard route | Page deleted, redirect gone, smoke expects 404 | Leaving `PROTECTED_ROUTES` in place keeps the old 302 |
 | 2. Link signed-in home to todos | Top-bar Todos link, hero unchanged | Putting the link on the hero would show it to anonymous visitors |
-| 3. Add home and sign-out on the todos view | Outline buttons on the card, sign-out still returns `/` | A GET sign-out link would skip the existing POST |
+| 3. Add home and sign-out on the todos view | Home `Topbar` on the list, Home instead of Todos, sign-out still returns `/` | A second bar would not match the home page |
 | 4. Restyle the landing and auth shells | Public pages use the light tokens | A transparent field on a leftover dark shell would be unreadable, so the shells change with the type |
 
 **Prerequisites:** The light tokens and `Card` / `buttonVariants` are already in the repo. Smoke needs the usual running server and local Supabase.

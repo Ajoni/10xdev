@@ -216,7 +216,11 @@ const steps = [
   [
     "todos list in deadline, complexity, and age order",
     () => request("/todos"),
-    { status: 200, ordered: originalOrder },
+    {
+      status: 200,
+      ordered: originalOrder,
+      includes: ["Home", 'href="/"', "Sign out", 'action="/api/auth/signout"'],
+    },
   ],
   [
     "capture todo done actions",
