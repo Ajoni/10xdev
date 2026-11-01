@@ -163,7 +163,11 @@ function actionsOk(expected) {
 
 const steps = [
   ["home renders", () => request("/"), { status: 200 }],
-  ["dashboard redirects anonymous user", () => request("/dashboard"), { status: 302, location: "/auth/signin" }],
+  [
+    "dashboard is not found for anonymous user",
+    () => request("/dashboard"),
+    { status: 404, excludes: ["Dashboard", "authenticated users"] },
+  ],
   [
     "unsigned todos is not found",
     () => request("/todos"),
@@ -345,9 +349,17 @@ const steps = [
     () => request("/todos", { cookieJar: otherJar }),
     { status: 200, excludes: descriptions },
   ],
-  ["dashboard renders for signed-in user", () => request("/dashboard"), { status: 200 }],
+  [
+    "dashboard is not found for signed-in user",
+    () => request("/dashboard"),
+    { status: 404, excludes: ["Dashboard", "authenticated users"] },
+  ],
   ["signout clears session", () => request("/api/auth/signout", { method: "POST" }), { status: 302, location: "/" }],
-  ["dashboard redirects after signout", () => request("/dashboard"), { status: 302, location: "/auth/signin" }],
+  [
+    "dashboard is not found after signout",
+    () => request("/dashboard"),
+    { status: 404, excludes: ["Dashboard", "authenticated users"] },
+  ],
 ];
 
 let failed = 0;
