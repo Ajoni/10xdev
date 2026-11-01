@@ -289,26 +289,26 @@ No database change. A bookmarked `/dashboard` returns 404. There is no compatibi
 
 #### Automated
 
-- [x] 1.1 `src/pages/dashboard.astro` is absent
-- [x] 1.2 `src/middleware.ts` has no `/dashboard` entry and does not redirect that path to `/auth/signin`
-- [x] 1.3 `npm run lint` passes
-- [x] 1.4 `npm run smoke` passes, and anonymous, signed-in, and post-sign-out `GET /dashboard` each return status 404 with a body that excludes `Dashboard` and `authenticated users`
+- [x] 1.1 `src/pages/dashboard.astro` is absent — bed68a7
+- [x] 1.2 `src/middleware.ts` has no `/dashboard` entry and does not redirect that path to `/auth/signin` — bed68a7
+- [x] 1.3 `npm run lint` passes — bed68a7
+- [x] 1.4 `npm run smoke` passes, and anonymous, signed-in, and post-sign-out `GET /dashboard` each return status 404 with a body that excludes `Dashboard` and `authenticated users` — bed68a7
 
 #### Manual
 
-- [x] 1.5 Signed in and signed out, opening `/dashboard` shows no dashboard card
+- [x] 1.5 Signed in and signed out, opening `/dashboard` shows no dashboard card — bed68a7
 
 ### Phase 2: Link signed-in home to todos
 
 #### Automated
 
-- [ ] 2.1 `npm run lint` passes
-- [ ] 2.2 `npm run smoke` passes: anonymous `GET /` is 200 and excludes `href="/todos"` and `href="/dashboard"`; signed-in `GET /` is 200 and includes `href="/todos"` and `Todos`, and excludes `href="/dashboard"`
+- [x] 2.1 `npm run lint` passes
+- [x] 2.2 `npm run smoke` passes: anonymous `GET /` is 200 and excludes `href="/todos"` and `href="/dashboard"`; signed-in `GET /` is 200 and includes `href="/todos"` and `Todos`, and excludes `href="/dashboard"`
 
 #### Manual
 
-- [ ] 2.3 A signed-in home top bar shows the email, Todos, and Sign out, and Todos opens `/todos`
-- [ ] 2.4 The hero still shows Sign in and Sign up
+- [x] 2.3 A signed-in home top bar shows the email, Todos, and Sign out, and Todos opens `/todos`
+- [x] 2.4 The hero still shows Sign in and Sign up
 
 ### Phase 3: Add home and sign-out on the todos view
 

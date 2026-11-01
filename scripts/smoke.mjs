@@ -162,7 +162,7 @@ function actionsOk(expected) {
 }
 
 const steps = [
-  ["home renders", () => request("/"), { status: 200 }],
+  ["home renders", () => request("/"), { status: 200, excludes: ['href="/todos"', 'href="/dashboard"'] }],
   [
     "dashboard is not found for anonymous user",
     () => request("/dashboard"),
@@ -187,6 +187,11 @@ const steps = [
     "signin accepts correct password",
     () => request("/api/auth/signin", { method: "POST", form: { email, password } }),
     { status: 302, location: "/todos" },
+  ],
+  [
+    "signed-in home links to todos",
+    () => request("/"),
+    { status: 200, includes: ['href="/todos"', "Todos"], excludes: ['href="/dashboard"'] },
   ],
   [
     "create sooner low-complexity todo",
