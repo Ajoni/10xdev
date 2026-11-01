@@ -315,25 +315,25 @@ No database change. A bookmarked `/dashboard` returns 404. There is no compatibi
 
 #### Automated
 
-- [x] 3.1 `npm run lint` passes
-- [x] 3.2 `npm run smoke` passes: a signed-in `GET /todos` includes `Home`, `href="/"`, `Sign out`, and `action="/api/auth/signout"`, and `POST /api/auth/signout` returns 302 to `/`
+- [x] 3.1 `npm run lint` passes — fac5a2d
+- [x] 3.2 `npm run smoke` passes: a signed-in `GET /todos` includes `Home`, `href="/"`, `Sign out`, and `action="/api/auth/signout"`, and `POST /api/auth/signout` returns 302 to `/` — fac5a2d
 
 #### Manual
 
-- [x] 3.3 Home on the todos card opens `/`
-- [x] 3.4 Sign out on the todos card ends the session and opens `/`
+- [x] 3.3 Home on the todos card opens `/` — fac5a2d
+- [x] 3.4 Sign out on the todos card ends the session and opens `/` — fac5a2d
 
 ### Phase 4: Restyle the landing and auth shells
 
 #### Automated
 
-- [ ] 4.1 `npm run lint` passes
-- [ ] 4.2 `Welcome.astro`, `Topbar.astro`, `src/pages/auth/signin.astro`, `src/pages/auth/signup.astro`, `src/pages/auth/confirm-email.astro`, and `src/components/auth/SignUpForm.tsx` contain none of `bg-cosmic`, `text-purple-`, `text-blue-`, `bg-purple-`, `from-blue-`, or `from-pink-`
-- [ ] 4.3 `src/styles/global.css` does not define `bg-cosmic`
-- [ ] 4.4 `npm run smoke` passes
+- [x] 4.1 `npm run lint` passes
+- [x] 4.2 `Welcome.astro`, `Topbar.astro`, `src/pages/auth/signin.astro`, `src/pages/auth/signup.astro`, `src/pages/auth/confirm-email.astro`, and `src/components/auth/SignUpForm.tsx` contain none of `bg-cosmic`, `text-purple-`, `text-blue-`, `bg-purple-`, `from-blue-`, or `from-pink-`
+- [x] 4.3 `src/styles/global.css` does not define `bg-cosmic`
+- [x] 4.4 `npm run smoke` passes
 
 #### Manual
 
-- [ ] 4.5 Home, sign-in, sign-up, and confirm-email use the light page background, foreground text, and the card and button treatment already on `/todos`
-- [ ] 4.6 The home title is still "Work slop" and the hero paragraph is unchanged
-- [ ] 4.7 Sign in still opens `/auth/signin` and Sign up still opens `/auth/signup`
+- [x] 4.5 Home, sign-in, sign-up, and confirm-email use the light page background, foreground text, and the card and button treatment already on `/todos`
+- [x] 4.6 The home title is still "Work slop" and the hero paragraph is unchanged
+- [x] 4.7 Sign in still opens `/auth/signin` and Sign up still opens `/auth/signup`
