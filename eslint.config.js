@@ -77,6 +77,11 @@ const scriptsConfig = defineConfig({
   rules: { "no-console": "off" },
 });
 
+const scriptCliConfig = defineConfig({
+  files: ["scripts/**/*.ts"],
+  rules: { "no-console": "off" },
+});
+
 export default defineConfig(
   { ignores: [".cursor/**"] },
   includeIgnoreFile(gitignorePath),
@@ -86,5 +91,6 @@ export default defineConfig(
   eslintPluginAstro.configs["flat/jsx-a11y-recommended"],
   astroConfig,
   scriptsConfig,
+  scriptCliConfig,
   eslintPluginPrettier,
 );

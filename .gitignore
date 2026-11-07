@@ -37,3 +37,16 @@ pnpm-debug.log*
 .cursor/prompts/skill-explainer.md
 skills-lock.json
 .10x-cli.json
+.cursor/prompts/m4l2-1-territory-git-history.md
+.cursor/prompts/m4l2-2-structure-dependency-cruiser.md
+.cursor/prompts/m4l2-3-contributors-git.md
+.cursor/prompts/m4l2-repo-map-synthesis.md
+.cursor/prompts/m4l3-1-research-with-map.md
+.cursor/prompts/m4l3-2-ast-grep-verification.md
+.cursor/prompts/m4l4-1-new-change-intention.md
+.cursor/prompts/m4l4-2-refactor-opportunities-research.md
+.cursor/prompts/m4l4-3-ranking-ast-grep-verification.md
+.cursor/prompts/m4l5-1-domain-distillation.md
+.cursor/prompts/m4l5-2-invariant-aggregate-refactor.md
+.cursor/prompts/m4l5-3-anti-corruption-layer.md
+.cursor/prompts/m5l2-agent.md
