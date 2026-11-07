@@ -1,14 +1,21 @@
 import { Agent, CursorAgentError } from "@cursor/sdk";
 import { z } from "zod";
+const Criterion = z.object({
+  score: z.number(),
+  rationale: z.string(),
+});
 const ReviewResult = z.object({
-  criteria: z.object({
-    implementationCorrectness: z.object({ score: z.number(), rationale: z.string() }),
-    idiomaticity: z.object({ score: z.number(), rationale: z.string() }),
-    complexity: z.object({ score: z.number(), rationale: z.string() }),
-    testRiskCoverage: z.object({ score: z.number(), rationale: z.string() }),
-    documentation: z.object({ score: z.number(), rationale: z.string() }),
-    securitySafety: z.object({ score: z.number(), rationale: z.string() }),
-  }),
+  criteria: z.union([
+    z.object({
+      implementationCorrectness: Criterion,
+      idiomaticity: Criterion,
+      complexity: Criterion,
+      testRiskCoverage: Criterion,
+      documentation: Criterion,
+      securitySafety: Criterion,
+    }),
+    z.array(z.object({ id: z.string(), score: z.number(), rationale: z.string() })).min(1),
+  ]),
   verdict: z.enum(["pass", "fail"]),
   summary: z.string(),
 });
@@ -26,7 +33,22 @@ if (apiKey === undefined || apiKey === "") {
 }
 try {
   const result = await Agent.prompt(
-    `Zrecenzuj ten diff. Zwróć wyłącznie JSON zgodny ze schematem: sześć kryteriów (score 1-10 i rationale), verdict "pass" albo "fail", summary w markdownu.\n\n${diff}`,
+    `Zrecenzuj ten diff. Zwróć wyłącznie jeden obiekt JSON, bez markdownu i bez tekstu wokół niego.
+Pole criteria ma być obiektem o tych kluczach, nie tablicą. score to liczba całkowita od 1 do 10.
+{
+  "criteria": {
+    "implementationCorrectness": { "score": 1, "rationale": "..." },
+    "idiomaticity": { "score": 1, "rationale": "..." },
+    "complexity": { "score": 1, "rationale": "..." },
+    "testRiskCoverage": { "score": 1, "rationale": "..." },
+    "documentation": { "score": 1, "rationale": "..." },
+    "securitySafety": { "score": 1, "rationale": "..." }
+  },
+  "verdict": "pass",
+  "summary": "markdown do komentarza w PR"
+}
+
+${diff}`,
     {
       apiKey,
       model: { id: "composer-2.5" },
