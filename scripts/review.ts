@@ -15,6 +15,7 @@ if (apiKey === undefined || apiKey === "") {
 }
 
 try {
+  console.log(REVIEWER_PROMPT);
   const result = await Agent.prompt(
     `${REVIEWER_PROMPT}
     Diff:

@@ -14,13 +14,32 @@ export const ReviewCriteria = z.object({
   implementationCorrectness: ReviewCriterion.describe(
     "Does the code do what it claims, handling edge cases and error paths without regressions? " +
       "1: logic broken, misses obvious edge/error cases, or silently regresses. " +
-      "10: correct across happy path, edge cases, and failure modes with no regressions."
+      "10: correct across happy path, edge cases, and failure modes with no regressions.",
   ),
-  // ... idiomaticity, complexity, testRiskCoverage, documentation
+  idiomaticity: ReviewCriterion.describe(
+    "Does it follow language, framework, and repo conventions? " +
+      "1: fights the stack's idioms and this repository's patterns. " +
+      "10: reads like the well-written code around it.",
+  ),
+  complexity: ReviewCriterion.describe(
+    "Is it as simple as the problem allows, free of needless abstraction? " +
+      "1: overbuilt or tangled; accidental complexity hides the intent. " +
+      "10: the simplest design that fully solves the problem.",
+  ),
+  testRiskCoverage: ReviewCriterion.describe(
+    "Are risky paths tested in proportion to their risk? " +
+      "1: risky logic left untested, or tests that assert nothing. " +
+      "10: the riskiest paths are tested deliberately and well.",
+  ),
+  documentation: ReviewCriterion.describe(
+    "Are non-obvious decisions and public surfaces explained? " +
+      "1: intent has to be reconstructed; needed explanation is missing. " +
+      "10: enough documentation to explain why, without restating the obvious.",
+  ),
   securitySafety: ReviewCriterion.describe(
     "Does the change avoid vulnerabilities, leaking secrets, or unsafe handling of untrusted input? " +
       "1: introduces an exploitable flaw, leaks secrets, or trusts untrusted input unsafely. " +
-      "10: input validated, secrets handled correctly, no new attack surface opened."
+      "10: input validated, secrets handled correctly, no new attack surface opened.",
   ),
 });
 export type ReviewCriteria = z.infer<typeof ReviewCriteria>;
@@ -50,4 +69,3 @@ Score these six criteria, each as an INTEGER from 1 (worst) to 10 (best), and gi
 Then emit a single authoritative \`verdict\` ("pass" or "fail") and a \`summary\` written as markdown suitable for posting as a PR comment (lead with the verdict, then the most important findings).
 Do it according to the JSON schema:
 ${REVIEW_JSON_SCHEMA}`;
-
