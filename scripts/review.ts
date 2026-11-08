@@ -1,17 +1,6 @@
 import { Agent, CursorAgentError } from "@cursor/sdk";
-import { z } from "zod";
-const ReviewResult = z.object({
-  criteria: z.object({
-    implementationCorrectness: z.object({ score: z.number(), rationale: z.string() }),
-    idiomaticity: z.object({ score: z.number(), rationale: z.string() }),
-    complexity: z.object({ score: z.number(), rationale: z.string() }),
-    testRiskCoverage: z.object({ score: z.number(), rationale: z.string() }),
-    documentation: z.object({ score: z.number(), rationale: z.string() }),
-    securitySafety: z.object({ score: z.number(), rationale: z.string() }),
-  }),
-  verdict: z.enum(["pass", "fail"]),
-  summary: z.string(),
-});
+import { REVIEWER_PROMPT, ReviewResult } from "./review-schema";
+
 async function readDiff(): Promise<string> {
   const chunks: Buffer[] = [];
   for await (const chunk of process.stdin) chunks.push(chunk as Buffer);
@@ -24,14 +13,16 @@ const apiKey = process.env.CURSOR_API_KEY;
 if (apiKey === undefined || apiKey === "") {
   throw new Error("Brak CURSOR_API_KEY.");
 }
+
 try {
   const result = await Agent.prompt(
-    `Zrecenzuj ten diff. Zwróć wyłącznie JSON zgodny ze schematem: sześć kryteriów (score 1-10 i rationale), verdict "pass" albo "fail", summary w markdownu.\n\n${diff}`,
+    `${REVIEWER_PROMPT}
+    Diff:
+    ${diff}`,
     {
       apiKey,
       model: { id: "composer-2.5" },
       tools: [],
-      local: { cwd: process.cwd() },
     },
   );
   if (result.status === "error") {
