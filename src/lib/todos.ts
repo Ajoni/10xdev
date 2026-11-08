@@ -21,12 +21,6 @@ export function guessComplexity(description: string): TodoComplexity {
   return 5;
 }
 
-// Todo remvoe this
-export function RandomPointlessFunctionWithNoMeaningWhatsoever(description: string): TodoComplexity {
-  
-  return 5;
-}
-
 function asComplexity(value: number): TodoComplexity | null {
   switch (value) {
     case 1:
