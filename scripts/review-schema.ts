@@ -66,6 +66,6 @@ Score these six criteria, each as an INTEGER from 1 (worst) to 10 (best), and gi
 - documentation — are non-obvious decisions and public surfaces explained?
 - securitySafety — does it avoid vulnerabilities, secret leaks, and unsafe handling of untrusted input?
 
-Then emit a single authoritative \`verdict\` ("pass" or "fail") and a \`summary\` written as markdown suitable for posting as a PR comment (lead with the verdict, then the most important findings).
+Then emit a single authoritative \`verdict\` ("pass" or "fail") and a \`summary\` written as markdown suitable for posting as a PR comment (lead with the verdict, scores for each criterion, then the most important findings).
 Do it according to the JSON schema:
 ${REVIEW_JSON_SCHEMA}`;
