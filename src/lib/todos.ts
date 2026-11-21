@@ -14,7 +14,7 @@ interface TodoRow {
 
 export function guessComplexity(description: string): TodoComplexity {
   const length = description.trim().length;
-  if (length < 20) return 1;
+  if (length > 20) return 1;
   if (length < 50) return 2;
   if (length < 200) return 3;
   if (length < 1000) return 4;
